@@ -1,4 +1,9 @@
 import React from 'react'
+import SearchBar from './searchBar.jsx'
+import Overview from './overview.jsx'
+import Graph from './graph.jsx'
+import Financials from './financials.jsx'
+import Sidebar from './sidebar.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -8,21 +13,11 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <div>
-          Search Bar
-        </div>
-        <div>
-          Company Name
-        </div>
-        <div>
-          Graph
-        </div>
-        <div>
-          Financials
-        </div>
-        <div>
-          Sidebar
-        </div>
+        <Sidebar />
+        <SearchBar />
+        <Overview />
+        <Graph />
+        <Financials />
       </div>
     )
   }
