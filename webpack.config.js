@@ -1,14 +1,17 @@
 const path = require('path')
 
+const ENTRY = __dirname + '/client/src';
+const OUTPUT = __dirname + '/client/dist';
+
 module.exports = {
   mode: 'development',
-  entry: `${__dirname}/client/src/index.js`,
+  entry: ENTRY + `/index.js`,
   module: {
     rules: [
       {
         test: /\.jsx?/,
-        include: `${__dirname}/client/src`,
-        exclude: [/(node_modules)/, path.resolve(__dirname, "node_modules")],
+        include: ENTRY,
+        exclude: [/node_modules/, path.resolve(__dirname, "node_modules")],
         use: {
           loader: 'babel-loader',
           options: {
@@ -19,7 +22,7 @@ module.exports = {
     ]
   },
   output: {
-    path: `${__dirname}/client/dist`,
+    path: OUTPUT,
     filename: 'bundle.js'
   }
 }
