@@ -1,16 +1,28 @@
 import React from 'react'
+import axios from 'axios'
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: ''
+      ticker: ''
     }
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  handleFormSubmit(event) {
+    event.preventDefault();
+    this.props.getTickerFinancials(this.state.ticker);
+  }
+  handleOnChange(event) {
+    this.setState({ticker: event.target.value})
   }
 
   render () {
     return (
-      <input placeholder="Search.."></input>
+      <form onSubmit={this.handleFormSubmit}>
+        <input placeholder="Search ticker.." onChange={(e) => {this.handleOnChange(e)}}></input>
+      </form>
     )
   }
 }
