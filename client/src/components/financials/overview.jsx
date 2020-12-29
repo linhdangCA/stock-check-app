@@ -5,13 +5,22 @@ const Overview = (props) => {
     <div>
       Overview
       <div>
-        Anuual Dividend: {props.overviewData.DividendPerShare}
+        Anuual Dividend Per Share: {props.overviewData.DividendPerShare}
       </div>
       <div>
-        Quarterly Dividend: {props.overviewData.DividendPerShare / 4}
+        Quarterly Dividend Per Share: {props.overviewData.DividendPerShare / 4}
       </div>
       <div>
-        EPS: {props.overviewData.EPS}
+        Earnings Per Share: {props.overviewData.EPS}
+      </div>
+      <div>
+        Shares Outstanding: {(props.overviewData.SharesOutstanding / 1000000).toFixed(2)}M
+      </div>
+      <div>
+        Shares Float: {(props.overviewData.SharesFloat / 1000000).toFixed(2)}M
+      </div>
+      <div>
+        Shares Short: {(props.overviewData.SharesShort / 1000000).toFixed(2)}M
       </div>
     </div>
   )

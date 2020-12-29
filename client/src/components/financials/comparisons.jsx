@@ -22,9 +22,9 @@ function reverseOrder(reports) {
   return reversed;
 }
 
-const IncomeStatement = ({incomeStatementData}) => {
+const ComparisonAnalysis = ({financialStatements}) => {
   const classes = useStyles();
-  const reversedAnnualReports = reverseOrder(incomeStatementData.annualReports);
+  const reversedAnnualReports = reverseOrder(financialStatements.incomeStatementData.annualReports);
 
   return (
     <div>
@@ -32,7 +32,7 @@ const IncomeStatement = ({incomeStatementData}) => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-            <TableCell width="300">Income Statement Items ($ billion)</TableCell>
+            <TableCell width="300">Comparison Analysis ($ billion)</TableCell>
               {reversedAnnualReports.map((report) => (
                 <TableCell key={report.fiscalDateEnding} align="right">{report.fiscalDateEnding}</TableCell>
               ))}
@@ -58,4 +58,4 @@ const IncomeStatement = ({incomeStatementData}) => {
   )
 }
 
-export default IncomeStatement
+export default ComparisonAnalysis

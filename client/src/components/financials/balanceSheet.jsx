@@ -1,0 +1,79 @@
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  }
+})
+
+function reverseOrder(reports) {
+  var reversed = [];
+  for (var i = 0; i < reports.length; i++) {
+    reversed.push(reports[(reports.length - 1) - i]);
+  }
+  return reversed;
+}
+
+const BalanceSheet = ({balanceSheetData}) => {
+  const classes = useStyles();
+  const reversedAnnualReports = reverseOrder(balanceSheetData.annualReports);
+
+  return (
+    <div>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+            <TableCell width="300">Balance Sheet Items ($ billion)</TableCell>
+              {reversedAnnualReports.map((report) => (
+                <TableCell key={report.fiscalDateEnding} align="right">{report.fiscalDateEnding}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>Total Current Assets</TableCell>
+              {reversedAnnualReports.map((report) => (
+                <TableCell key={report.totalCurrentAssets} align="right">{(report.totalCurrentAssets/1000000000).toFixed(2)}</TableCell>
+              ))}
+            </TableRow>
+            <TableRow>
+            <TableCell>Total Assets</TableCell>
+              {reversedAnnualReports.map((report) => (
+                <TableCell key={report.totalAssets} align="right">{(report.totalAssets/1000000000).toFixed(2)}</TableCell>
+              ))}
+            </TableRow>
+            <TableRow>
+            <TableCell>Total Current Liabilities</TableCell>
+              {reversedAnnualReports.map((report) => (
+                <TableCell key={report.totalCurrentLiabilities} align="right">{(report.totalCurrentLiabilities/1000000000).toFixed(2)}</TableCell>
+              ))}
+            </TableRow>
+            <TableRow>
+            <TableCell>Total Liabilities</TableCell>
+              {reversedAnnualReports.map((report) => (
+                <TableCell key={report.totalLiabilities} align="right">{(report.totalLiabilities/1000000000).toFixed(2)}</TableCell>
+              ))}
+            </TableRow>
+            <TableRow>
+            <TableCell>Long Term Debt</TableCell>
+              {reversedAnnualReports.map((report) => (
+                <TableCell key={report.longTermDebt} align="right">{(report.longTermDebt/1000000000).toFixed(2)}</TableCell>
+              ))}
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  )
+}
+
+export default BalanceSheet

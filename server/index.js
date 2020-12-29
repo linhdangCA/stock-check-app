@@ -7,6 +7,9 @@ const PORT = 3000;
 app.use(express.static(__dirname + `/../client/dist`))
 app.use(parser.json())
 
+app.get('/financials', (req, res) => {
+  res.sendStatus(418)
+})
 
 app.listen(3000, () => {
   console.log(`server is listening on port ${3000}`)
