@@ -15,17 +15,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      company1: {
-        overview: dummyDataOverview,
-        incomeStatement: dummyDataIncome,
-        balanceSheet: dummyDataBalance,
-        cashFlowStatement: dummyDataCashFlow
-      },
-      company2: {},
-      company3: {},
-      company4: {},
-      company5: {},
-      display: 'company1'
+      companies: [
+        {
+          overview: dummyDataOverview,
+          incomeStatement: dummyDataIncome,
+          balanceSheet: dummyDataBalance,
+          cashFlowStatement: dummyDataCashFlow
+        }
+      ],
+      display: '0'
     }
     this.getTickerFinancials = this.getTickerFinancials.bind(this);
     this.removeCompany = this.removeCompany.bind(this);
@@ -33,12 +31,14 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({
-      company1: {
-        overview: dummyDataOverview,
-        incomeStatement: dummyDataIncome,
-        balanceSheet: dummyDataBalance,
-        cashFlowStatement: dummyDataCashFlow
-      }
+      companies: [
+        {
+          overview: dummyDataOverview,
+          incomeStatement: dummyDataIncome,
+          balanceSheet: dummyDataBalance,
+          cashFlowStatement: dummyDataCashFlow
+        }
+      ]
     })
   }
 
@@ -55,31 +55,25 @@ class App extends React.Component {
           balanceSheet: res.data[2],
           cashFlowStatement: res.data[3]
         }
-        console.log(data)
-        if (this.state.company1.overview.Symbol === 'IBM - example') {
-          this.setState({company1: data})
-        } else if (this.state.company2.overview === undefined) {
-          this.setState({company2: data})
-        } else if (this.state.company3.overview === undefined) {
-          this.setState({company3: data})
-        } else if (this.state.company4.overview === undefined) {
-          this.setState({company4: data})
-        } else if (this.state.company5.overview === undefined) {
-          this.setState({company5: data})
+        if (this.state.companies[0].overview.Symbol === 'IBM - example') {
+          this.setState({companies: [data]})
+        } else {
+          var updatedCompanies = Object.assign(this.state.companies);
+          updatedCompanies.push(data);
+          this.setState({companies: updatedCompanies});
         }
       })
       .catch((err) => console.log(err));
   }
   removeCompany(event, ticker) {
-    for (var key in this.state) {
-      console.log(event, ticker, key)
-      if (ticker === 'IBM - example') {
-        continue;
-      } else {
-        if (ticker === this.state.[key].overview.Symbol) {
-          this.setState({
-            [key]: {}
-          })
+    console.log(ticker, this.state.companies.length, this.state.companies)
+    if (this.state.companies.length > 1) {
+      for (var i = 0; i < this.state.companies.length; i++) {
+        if (ticker === this.state.companies[i].overview.Symbol) {
+          var updatedCompanies = Object.assign(this.state.companies);
+          updatedCompanies.splice(i, 1);
+          console.log(updatedCompanies)
+          this.setState({companies: updatedCompanies});
         }
       }
     }
@@ -89,18 +83,14 @@ class App extends React.Component {
     return (
       <div>
         <Sidebar />
-        <Header data={this.state.company1.overview}/>
+        <Header data={this.state.companies[this.state.display].overview}/>
         <Graph />
         <Financials
-          company1={this.state.company1}
-          company2={this.state.company2}
-          company3={this.state.company3}
-          company4={this.state.company4}
-          company5={this.state.company5}
-          overviewData={this.state.[this.state.display].overview}
-          incomeStatementData={this.state.[this.state.display].incomeStatement}
-          balanceSheetData={this.state.[this.state.display].balanceSheet}
-          cashFlowStatementData={this.state.[this.state.display].cashFlowStatement}
+          companies={this.state.companies}
+          overviewData={this.state.companies[this.state.display].overview}
+          incomeStatementData={this.state.companies[this.state.display].incomeStatement}
+          balanceSheetData={this.state.companies[this.state.display].balanceSheet}
+          cashFlowStatementData={this.state.companies[this.state.display].cashFlowStatement}
           getTickerFinancials={this.getTickerFinancials}
           removeCompany={this.removeCompany}
         />

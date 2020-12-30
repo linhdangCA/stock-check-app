@@ -15,7 +15,8 @@ const useStyles = makeStyles({
   }
 })
 
-const ComparisonAnalysis = ({companies}) => {
+const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany}) => {
+  console.log('companies', companies)
   const classes = useStyles();
   const rows = [];
 
@@ -44,28 +45,27 @@ const ComparisonAnalysis = ({companies}) => {
     return ((Number(longTermDebt) + Number(equity))/Number(revenue)).toFixed(2);
   }
   function populateRow(company) {
-    rows.push(createData(companies.[company].overview.Symbol,
-      discountedCashFlowCalc(companies.[company].cashFlowStatement.annualReports[0].operatingCashflow,
-        companies.[company].cashFlowStatement.annualReports[0].capitalExpenditures,
-        companies.[company].overview.SharesOutstanding,
-        companies.[company].balanceSheet.annualReports[0].cash,
-        companies.[company].balanceSheet.annualReports[0].totalLongTermDebt),
-      (companies.[company].overview.MarketCapitalization / 1000000000).toFixed(2)+'B',
-      currentRatio(companies.[company].balanceSheet.annualReports[0].totalCurrentAssets, companies.[company].balanceSheet.annualReports[0].totalCurrentLiabilities),
-      debtToTotalAssets(companies.[company].balanceSheet.annualReports[0].totalLongTermDebt, companies.[company].balanceSheet.annualReports[0].totalAssets),
-      debtToEquity(companies.[company].balanceSheet.annualReports[0].totalLongTermDebt, companies.[company].balanceSheet.annualReports[0].totalShareholderEquity),
-      evToRevenue(companies.[company].balanceSheet.annualReports[0].totalLongTermDebt,
-        companies.[company].balanceSheet.annualReports[0].totalShareholderEquity,
-        companies.[company].incomeStatement.annualReports[0].totalRevenue,
-        companies.[company].overview.SharesOutstanding
+    rows.push(createData(companies[company].overview.Symbol,
+      discountedCashFlowCalc(companies[company].cashFlowStatement.annualReports[0].operatingCashflow,
+        companies[company].cashFlowStatement.annualReports[0].capitalExpenditures,
+        companies[company].overview.SharesOutstanding,
+        companies[company].balanceSheet.annualReports[0].cash,
+        companies[company].balanceSheet.annualReports[0].totalLongTermDebt),
+      (companies[company].overview.MarketCapitalization / 1000000000).toFixed(2)+'B',
+      currentRatio(companies[company].balanceSheet.annualReports[0].totalCurrentAssets, companies[company].balanceSheet.annualReports[0].totalCurrentLiabilities),
+      debtToTotalAssets(companies[company].balanceSheet.annualReports[0].totalLongTermDebt, companies[company].balanceSheet.annualReports[0].totalAssets),
+      debtToEquity(companies[company].balanceSheet.annualReports[0].totalLongTermDebt, companies[company].balanceSheet.annualReports[0].totalShareholderEquity),
+      evToRevenue(companies[company].balanceSheet.annualReports[0].totalLongTermDebt,
+        companies[company].balanceSheet.annualReports[0].totalShareholderEquity,
+        companies[company].incomeStatement.annualReports[0].totalRevenue,
+        companies[company].overview.SharesOutstanding
       )
     ));
   }
   function populateRows() {
-    for (var i = 1; i < 6; i++) {
-      var company = `company${i}`;
-      if (companies.[company].overview !== undefined) {
-        populateRow(company);
+    for (var i = 0; i < companies.length; i++) {
+      if (companies[i].overview !== undefined) {
+        populateRow(i);
       }
     }
   }
@@ -94,7 +94,7 @@ const ComparisonAnalysis = ({companies}) => {
               {rows.map((row) => (
                 <TableRow key={row.ticker}>
                   <TableCell>{row.ticker}</TableCell>
-                  <TableCell align="center" onClick={(e)=>{companies.removeCompany(e, row.ticker)}}>X</TableCell>
+                  <TableCell align="center" onClick={(e)=>{removeCompany(e, row.ticker)}}>{companies.length > 1 ? 'X' : ''}</TableCell>
                   <TableCell align="center">{row.dcf}</TableCell>
                   <TableCell align="center">{row.mktcap}</TableCell>
                   <TableCell align="center">{row.ca}</TableCell>
@@ -104,7 +104,7 @@ const ComparisonAnalysis = ({companies}) => {
                 </TableRow>
               ))}
               <TableRow>
-                <TableCell><SearchBar getTickerFinancials={companies.getTickerFinancials}/></TableCell>
+                <TableCell><SearchBar getTickerFinancials={getTickerFinancials}/></TableCell>
               </TableRow>
           </TableBody>
         </Table>
