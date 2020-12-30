@@ -31,36 +31,46 @@ const ComparisonAnalysis = ({companies}) => {
     var dcf = balance / Number(sharesOutstanding);
     return dcf.toFixed(2);
   }
-
+  function currentRatio(currentAssets, currentLiabilities) {
+    return (Number(currentAssets)/Number(currentLiabilities)).toFixed(2);
+  }
+  function debtToTotalAssets(longTermDebt, totalAssets) {
+    return (Number(longTermDebt)/Number(totalAssets)).toFixed(2);
+  }
+  function debtToEquity(longTermDebt, equity) {
+    return (Number(longTermDebt)/Number(equity)).toFixed(2);
+  }
+  function evToRevenue(longTermDebt, equity, revenue) {
+    return ((Number(longTermDebt) + Number(equity))/Number(revenue)).toFixed(2);
+  }
+  function populateRow(company) {
+    rows.push(createData(companies.[company].overview.Symbol,
+      discountedCashFlowCalc(companies.[company].cashFlowStatement.annualReports[0].operatingCashflow,
+        companies.[company].cashFlowStatement.annualReports[0].capitalExpenditures,
+        companies.[company].overview.SharesOutstanding,
+        companies.[company].balanceSheet.annualReports[0].cash,
+        companies.[company].balanceSheet.annualReports[0].totalLongTermDebt),
+      (companies.[company].overview.MarketCapitalization / 1000000000).toFixed(2)+'B',
+      currentRatio(companies.[company].balanceSheet.annualReports[0].totalCurrentAssets, companies.[company].balanceSheet.annualReports[0].totalCurrentLiabilities),
+      debtToTotalAssets(companies.[company].balanceSheet.annualReports[0].totalLongTermDebt, companies.[company].balanceSheet.annualReports[0].totalAssets),
+      debtToEquity(companies.[company].balanceSheet.annualReports[0].totalLongTermDebt, companies.[company].balanceSheet.annualReports[0].totalShareholderEquity),
+      evToRevenue(companies.[company].balanceSheet.annualReports[0].totalLongTermDebt,
+        companies.[company].balanceSheet.annualReports[0].totalShareholderEquity,
+        companies.[company].incomeStatement.annualReports[0].totalRevenue,
+        companies.[company].overview.SharesOutstanding
+      )
+    ));
+  }
   function populateRows() {
-    rows.push(createData(companies.company1.overview.Symbol,
-      discountedCashFlowCalc(companies.company1.cashFlowStatement.annualReports[0].operatingCashflow,
-        companies.company1.cashFlowStatement.annualReports[0].capitalExpenditures,
-        companies.company1.overview.SharesOutstanding,
-        companies.company1.balanceSheet.annualReports[0].cash,
-        companies.company1.balanceSheet.annualReports[0].totalLongTermDebt),
-      (companies.company1.overview.MarketCapitalization / 1000000000).toFixed(2)+'B',
-      1.1,
-      0.35,
-      2.5,
-      1));
-    if (companies.company2.overview !== undefined) {
-      rows.push(createData(companies.company2.overview.Symbol,
-        discountedCashFlowCalc(companies.company2.cashFlowStatement.annualReports[0].operatingCashflow,
-          companies.company2.cashFlowStatement.annualReports[0].capitalExpenditures,
-          companies.company2.overview.SharesOutstanding,
-          companies.company2.balanceSheet.annualReports[0].cash,
-          companies.company2.balanceSheet.annualReports[0].totalLongTermDebt),
-        (companies.company2.overview.MarketCapitalization / 1000000000).toFixed(2)+'B',
-        1.1,
-        0.35,
-        2.5,
-        1));
+    for (var i = 1; i < 6; i++) {
+      var company = `company${i}`;
+      if (companies.[company].overview !== undefined) {
+        populateRow(company);
+      }
     }
   }
   populateRows();
 
-  console.log('companies', companies)
   return (
     <div>
       <TableContainer component={Paper}>

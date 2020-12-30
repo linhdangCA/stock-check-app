@@ -54,6 +54,7 @@ class App extends React.Component {
           balanceSheet: res.data[2],
           cashFlowStatement: res.data[3]
         }
+        console.log(data)
         if (this.state.company1.overview.Symbol === 'IBM - example') {
           this.setState({company1: data})
         } else if (this.state.company2.overview === undefined) {
