@@ -52,7 +52,6 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <Button>Hello World</Button>
         <Sidebar />
         <SearchBar getTickerFinancials={this.getTickerFinancials}/>
         <Header data={this.state.overview}/>

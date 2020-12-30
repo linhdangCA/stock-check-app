@@ -14,43 +14,46 @@ const useStyles = makeStyles({
   }
 })
 
-function reverseOrder(reports) {
-  var reversed = [];
-  for (var i = 0; i < reports.length; i++) {
-    reversed.push(reports[(reports.length - 1) - i]);
-  }
-  return reversed;
-}
-
 const ComparisonAnalysis = ({financialStatements}) => {
   const classes = useStyles();
-  const reversedAnnualReports = reverseOrder(financialStatements.incomeStatementData.annualReports);
+
+  function createData(ticker, dcf, mktcap, ca, d_ta, d_e, ev_revenue) {
+    return {ticker, dcf, mktcap, ca, d_ta, d_e, ev_revenue}
+  }
+  const rows = [
+    createData(financialStatements.overviewData.Symbol, 120, (financialStatements.overviewData.MarketCapitalization / 1000000000).toFixed(2)+'B', 1.1, 0.35, 2.5, 1)
+  ];
 
   return (
     <div>
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
+        <Table className={classes.table} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-            <TableCell width="300">Comparison Analysis ($ billion)</TableCell>
-              {reversedAnnualReports.map((report) => (
-                <TableCell key={report.fiscalDateEnding} align="right">{report.fiscalDateEnding}</TableCell>
-              ))}
+              <TableCell width="300">Comparison Analysis (most recent 10k)</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell width="300">Company</TableCell>
+              <TableCell align="right">DCF (intrinsic value)</TableCell>
+              <TableCell align="right">Mkt Cap</TableCell>
+              <TableCell align="right">Current Ratio</TableCell>
+              <TableCell align="right">Debt/Total Assets</TableCell>
+              <TableCell align="right">Debt/Equity</TableCell>
+              <TableCell align="right">EV/revenue</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell>Total Revenue</TableCell>
-              {reversedAnnualReports.map((report) => (
-                <TableCell key={report.totalRevenue} align="right">{(report.totalRevenue/1000000000).toFixed(2)}</TableCell>
+              {rows.map((row) => (
+                <TableRow key={row.ticker}>
+                  <TableCell>{row.ticker}</TableCell>
+                  <TableCell align="right">{row.dcf}</TableCell>
+                  <TableCell align="right">{row.mktcap}</TableCell>
+                  <TableCell align="right">{row.ca}</TableCell>
+                  <TableCell align="right">{row.d_ta}</TableCell>
+                  <TableCell align="right">{row.d_e}</TableCell>
+                  <TableCell align="right">{row.ev_revenue}</TableCell>
+                </TableRow>
               ))}
-            </TableRow>
-            <TableRow>
-            <TableCell>Net Income</TableCell>
-              {reversedAnnualReports.map((report) => (
-                <TableCell key={report.netIncome} align="right">{(report.netIncome/1000000000).toFixed(2)}</TableCell>
-              ))}
-            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>

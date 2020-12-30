@@ -29,10 +29,13 @@ const CashFlowStatement = ({cashFlowStatementData}) => {
   return (
     <div>
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
+        <Table className={classes.table} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell width="300">Cash Flow Statement Items ($ billion)</TableCell>
+              <TableCell width="300">Cash Flow Statement ($ billion)</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell width="300">Items</TableCell>
               {reversedAnnualReports.map((report) => (
                 <TableCell key={report.fiscalDateEnding} align="right">{report.fiscalDateEnding}</TableCell>
               ))}

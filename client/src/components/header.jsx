@@ -3,7 +3,7 @@ import React from 'react'
 const Header = (props) => {
   return (
     <div>
-      Overview
+      Header
       <div>
         {props.data.Name}
       </div>

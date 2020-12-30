@@ -29,10 +29,13 @@ const BalanceSheet = ({balanceSheetData}) => {
   return (
     <div>
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
+        <Table className={classes.table} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-            <TableCell width="300">Balance Sheet Items ($ billion)</TableCell>
+              <TableCell width="300">Balance Sheet ($ billion)</TableCell>
+            </TableRow>
+            <TableRow>
+            <TableCell width="300">Items</TableCell>
               {reversedAnnualReports.map((report) => (
                 <TableCell key={report.fiscalDateEnding} align="right">{report.fiscalDateEnding}</TableCell>
               ))}
@@ -67,6 +70,12 @@ const BalanceSheet = ({balanceSheetData}) => {
             <TableCell>Long Term Debt</TableCell>
               {reversedAnnualReports.map((report) => (
                 <TableCell key={report.longTermDebt} align="right">{(report.longTermDebt/1000000000).toFixed(2)}</TableCell>
+              ))}
+            </TableRow>
+            <TableRow>
+            <TableCell>Total Equity</TableCell>
+              {reversedAnnualReports.map((report) => (
+                <TableCell key={report.totalShareholderEquity} align="right">{(report.totalShareholderEquity/1000000000).toFixed(2)}</TableCell>
               ))}
             </TableRow>
           </TableBody>
