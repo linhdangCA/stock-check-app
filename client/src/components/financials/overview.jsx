@@ -3,7 +3,6 @@ import React from 'react'
 const Overview = (props) => {
   return (
     <div>
-      Overview
       <div>
         Anuual Dividend Per Share: {props.overviewData.DividendPerShare}
       </div>

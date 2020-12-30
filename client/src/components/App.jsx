@@ -15,20 +15,29 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      overview: dummyDataOverview,
-      incomeStatement: dummyDataIncome,
-      balanceSheet: dummyDataBalance,
-      cashFlowStatement: dummyDataCashFlow,
+      company1: {
+        overview: dummyDataOverview,
+        incomeStatement: dummyDataIncome,
+        balanceSheet: dummyDataBalance,
+        cashFlowStatement: dummyDataCashFlow
+      },
+      company2: {},
+      company3: {},
+      company4: {},
+      company5: {},
+      display: 'company1'
     }
     this.getTickerFinancials = this.getTickerFinancials.bind(this);
   }
 
   componentDidMount() {
     this.setState({
-      overview: dummyDataOverview,
-      incomeStatement: dummyDataIncome,
-      balanceSheet: dummyDataBalance,
-      cashFlowStatement: dummyDataCashFlow
+      company1: {
+        overview: dummyDataOverview,
+        incomeStatement: dummyDataIncome,
+        balanceSheet: dummyDataBalance,
+        cashFlowStatement: dummyDataCashFlow
+      }
     })
   }
 
@@ -38,14 +47,25 @@ class App extends React.Component {
         ticker: ticker
       }
     })
-      .then((res) => {this.setState(
-        {
+      .then((res) => {
+        var data = {
           overview: res.data[0],
           incomeStatement: res.data[1],
           balanceSheet: res.data[2],
           cashFlowStatement: res.data[3]
         }
-      )})
+        if (this.state.company1.overview.Symbol === 'IBM - example') {
+          this.setState({company1: data})
+        } else if (this.state.company2.overview === undefined) {
+          this.setState({company2: data})
+        } else if (this.state.company3.overview === undefined) {
+          this.setState({company3: data})
+        } else if (this.state.company4.overview === undefined) {
+          this.setState({company4: data})
+        } else if (this.state.company5.overview === undefined) {
+          this.setState({company5: data})
+        }
+      })
       .catch((err) => console.log(err));
   }
 
@@ -53,14 +73,19 @@ class App extends React.Component {
     return (
       <div>
         <Sidebar />
-        <SearchBar getTickerFinancials={this.getTickerFinancials}/>
-        <Header data={this.state.overview}/>
+        <Header data={this.state.company1.overview}/>
         <Graph />
         <Financials
-          overviewData={this.state.overview}
-          incomeStatementData={this.state.incomeStatement}
-          balanceSheetData={this.state.balanceSheet}
-          cashFlowStatementData={this.state.cashFlowStatement}
+          company1={this.state.company1}
+          company2={this.state.company2}
+          company3={this.state.company3}
+          company4={this.state.company4}
+          company5={this.state.company5}
+          overviewData={this.state.[this.state.display].overview}
+          incomeStatementData={this.state.[this.state.display].incomeStatement}
+          balanceSheetData={this.state.[this.state.display].balanceSheet}
+          cashFlowStatementData={this.state.[this.state.display].cashFlowStatement}
+          getTickerFinancials={this.getTickerFinancials}
         />
       </div>
     )

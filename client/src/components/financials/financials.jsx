@@ -9,10 +9,10 @@ const Financials = (props) => {
   return (
     <div>
       <Overview overviewData={props.overviewData}/>
+      <ComparisonAnalysis companies={props} getTickerFinancials={props.getTickerFinancials}/>
       <IncomeStatement incomeStatementData={props.incomeStatementData}/>
       <BalanceSheet balanceSheetData={props.balanceSheetData}/>
       <CashFlowStatement cashFlowStatementData={props.cashFlowStatementData}/>
-      <ComparisonAnalysis financialStatements={props}/>
     </div>
   )
 }
