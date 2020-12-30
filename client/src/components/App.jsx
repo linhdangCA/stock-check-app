@@ -28,6 +28,7 @@ class App extends React.Component {
       display: 'company1'
     }
     this.getTickerFinancials = this.getTickerFinancials.bind(this);
+    this.removeCompany = this.removeCompany.bind(this);
   }
 
   componentDidMount() {
@@ -69,6 +70,20 @@ class App extends React.Component {
       })
       .catch((err) => console.log(err));
   }
+  removeCompany(event, ticker) {
+    for (var key in this.state) {
+      console.log(event, ticker, key)
+      if (ticker === 'IBM - example') {
+        continue;
+      } else {
+        if (ticker === this.state.[key].overview.Symbol) {
+          this.setState({
+            [key]: {}
+          })
+        }
+      }
+    }
+  }
 
   render () {
     return (
@@ -87,6 +102,7 @@ class App extends React.Component {
           balanceSheetData={this.state.[this.state.display].balanceSheet}
           cashFlowStatementData={this.state.[this.state.display].cashFlowStatement}
           getTickerFinancials={this.getTickerFinancials}
+          removeCompany={this.removeCompany}
         />
       </div>
     )

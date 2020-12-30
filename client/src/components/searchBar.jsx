@@ -21,7 +21,7 @@ class SearchBar extends React.Component {
   render () {
     return (
       <form onSubmit={this.handleFormSubmit}>
-        <input placeholder="Search ticker.." onChange={(e) => {this.handleOnChange(e)}}></input>
+        <input placeholder="Add ticker.." onChange={(e) => {this.handleOnChange(e)}}></input>
       </form>
     )
   }

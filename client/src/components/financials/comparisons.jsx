@@ -81,24 +81,26 @@ const ComparisonAnalysis = ({companies}) => {
             </TableRow>
             <TableRow>
               <TableCell width="300">Company</TableCell>
-              <TableCell align="right">DCF (intrinsic value)</TableCell>
-              <TableCell align="right">Mkt Cap</TableCell>
-              <TableCell align="right">Current Ratio</TableCell>
-              <TableCell align="right">Debt/Total Assets</TableCell>
-              <TableCell align="right">Debt/Equity</TableCell>
-              <TableCell align="right">EV/revenue</TableCell>
+              <TableCell align="center">Remove</TableCell>
+              <TableCell align="center">DCF (intrinsic value)</TableCell>
+              <TableCell align="center">Mkt Cap</TableCell>
+              <TableCell align="center">Current Ratio</TableCell>
+              <TableCell align="center">Debt/Total Assets</TableCell>
+              <TableCell align="center">Debt/Equity</TableCell>
+              <TableCell align="center">EV/revenue</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
               {rows.map((row) => (
                 <TableRow key={row.ticker}>
                   <TableCell>{row.ticker}</TableCell>
-                  <TableCell align="right">{row.dcf}</TableCell>
-                  <TableCell align="right">{row.mktcap}</TableCell>
-                  <TableCell align="right">{row.ca}</TableCell>
-                  <TableCell align="right">{row.d_ta}</TableCell>
-                  <TableCell align="right">{row.d_e}</TableCell>
-                  <TableCell align="right">{row.ev_revenue}</TableCell>
+                  <TableCell align="center" onClick={(e)=>{companies.removeCompany(e, row.ticker)}}>X</TableCell>
+                  <TableCell align="center">{row.dcf}</TableCell>
+                  <TableCell align="center">{row.mktcap}</TableCell>
+                  <TableCell align="center">{row.ca}</TableCell>
+                  <TableCell align="center">{row.d_ta}</TableCell>
+                  <TableCell align="center">{row.d_e}</TableCell>
+                  <TableCell align="center">{row.ev_revenue}</TableCell>
                 </TableRow>
               ))}
               <TableRow>
