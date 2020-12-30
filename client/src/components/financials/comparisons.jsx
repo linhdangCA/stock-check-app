@@ -17,16 +17,45 @@ const useStyles = makeStyles({
 
 const ComparisonAnalysis = ({companies}) => {
   const classes = useStyles();
+  const rows = [];
 
   function createData(ticker, dcf, mktcap, ca, d_ta, d_e, ev_revenue) {
     return {ticker, dcf, mktcap, ca, d_ta, d_e, ev_revenue}
   }
-  const rows = [];
+  function discountedCashFlowCalc(operatingCash, capEx, sharesOutstanding, cash, longTermDebt) {
+    var fcf = Number(operatingCash) - Number(capEx);
+    var roi = 0.1;
+    var growth = 0.03;
+    var terminal = (fcf * 1.03)/(roi - growth);
+    var balance = terminal  + Number(cash) - Number(longTermDebt);
+    var dcf = balance / Number(sharesOutstanding);
+    return dcf.toFixed(2);
+  }
 
   function populateRows() {
-    rows.push(createData(companies.company1.overview.Symbol, 120, (companies.company1.overview.MarketCapitalization / 1000000000).toFixed(2)+'B', 1.1, 0.35, 2.5, 1));
+    rows.push(createData(companies.company1.overview.Symbol,
+      discountedCashFlowCalc(companies.company1.cashFlowStatement.annualReports[0].operatingCashflow,
+        companies.company1.cashFlowStatement.annualReports[0].capitalExpenditures,
+        companies.company1.overview.SharesOutstanding,
+        companies.company1.balanceSheet.annualReports[0].cash,
+        companies.company1.balanceSheet.annualReports[0].totalLongTermDebt),
+      (companies.company1.overview.MarketCapitalization / 1000000000).toFixed(2)+'B',
+      1.1,
+      0.35,
+      2.5,
+      1));
     if (companies.company2.overview !== undefined) {
-      rows.push(createData(companies.company2.overview.Symbol, 120, (companies.company2.overview.MarketCapitalization / 1000000000).toFixed(2)+'B', 1.1, 0.35, 2.5, 2));
+      rows.push(createData(companies.company2.overview.Symbol,
+        discountedCashFlowCalc(companies.company2.cashFlowStatement.annualReports[0].operatingCashflow,
+          companies.company2.cashFlowStatement.annualReports[0].capitalExpenditures,
+          companies.company2.overview.SharesOutstanding,
+          companies.company2.balanceSheet.annualReports[0].cash,
+          companies.company2.balanceSheet.annualReports[0].totalLongTermDebt),
+        (companies.company2.overview.MarketCapitalization / 1000000000).toFixed(2)+'B',
+        1.1,
+        0.35,
+        2.5,
+        1));
     }
   }
   populateRows();
