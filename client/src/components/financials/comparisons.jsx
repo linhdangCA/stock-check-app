@@ -8,15 +8,15 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
-  cursor: "pointer"
+  deleteCursor: "pointer"
 })
-
 const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, changeCurrentTickerDisplay, handleTickerFormSubmit, handleTickerOnChange, ticker}) => {
   const classes = useStyles();
   const rows = [];
@@ -95,7 +95,14 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
               {rows.map((row, index) => (
                 <TableRow key={row.ticker}>
                   <TableCell onClick={(e) => {changeCurrentTickerDisplay(e, index)}}>{row.ticker}</TableCell>
-                  <TableCell align="center" onClick={(e)=>{removeCompany(e, row.ticker)}}>{companies.length > 1 ? <DeleteForeverOutlinedIcon /> : ''}</TableCell>
+                  <TableCell align="center" onClick={(e)=>{removeCompany(e, row.ticker)}}>
+                    {companies.length > 1 ?
+                      <IconButton aria-label="delete">
+                        <DeleteForeverOutlinedIcon className={classes.deleteCursor} />
+                      </IconButton>
+                      : ''
+                    }
+                  </TableCell>
                   <TableCell align="center">{row.dcf}</TableCell>
                   <TableCell align="center">{row.mktcap}</TableCell>
                   <TableCell align="center">{row.ca}</TableCell>
