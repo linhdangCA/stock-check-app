@@ -15,8 +15,7 @@ const useStyles = makeStyles({
   }
 })
 
-const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany}) => {
-  console.log('companies', companies)
+const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, changeCurrentTickerDisplay}) => {
   const classes = useStyles();
   const rows = [];
 
@@ -91,9 +90,9 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany}) => 
             </TableRow>
           </TableHead>
           <TableBody>
-              {rows.map((row) => (
+              {rows.map((row, index) => (
                 <TableRow key={row.ticker}>
-                  <TableCell>{row.ticker}</TableCell>
+                  <TableCell onClick={(e) => {changeCurrentTickerDisplay(e, index)}}>{row.ticker}</TableCell>
                   <TableCell align="center" onClick={(e)=>{removeCompany(e, row.ticker)}}>{companies.length > 1 ? 'X' : ''}</TableCell>
                   <TableCell align="center">{row.dcf}</TableCell>
                   <TableCell align="center">{row.mktcap}</TableCell>

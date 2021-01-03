@@ -27,6 +27,7 @@ class App extends React.Component {
     }
     this.getTickerFinancials = this.getTickerFinancials.bind(this);
     this.removeCompany = this.removeCompany.bind(this);
+    this.handleTickerFinancialDisplayClick = this.handleTickerFinancialDisplayClick.bind(this);
   }
 
   componentDidMount() {
@@ -49,34 +50,42 @@ class App extends React.Component {
       }
     })
       .then((res) => {
-        var data = {
-          overview: res.data[0],
-          incomeStatement: res.data[1],
-          balanceSheet: res.data[2],
-          cashFlowStatement: res.data[3]
-        }
-        if (this.state.companies[0].overview.Symbol === 'IBM - example') {
-          this.setState({companies: [data]})
-        } else {
-          var updatedCompanies = Object.assign(this.state.companies);
-          updatedCompanies.push(data);
-          this.setState({companies: updatedCompanies});
+        console.log(res)
+        if (res.data[0].Symbol !== undefined) {
+          var data = {
+            overview: res.data[0],
+            incomeStatement: res.data[1],
+            balanceSheet: res.data[2],
+            cashFlowStatement: res.data[3]
+          }
+          if (this.state.companies[0].overview.Symbol === 'IBM - example') {
+            this.setState({companies: [data]})
+          } else {
+            var updatedCompanies = Object.assign(this.state.companies);
+            updatedCompanies.push(data);
+            this.setState({companies: updatedCompanies});
+          }
         }
       })
       .catch((err) => console.log(err));
   }
   removeCompany(event, ticker) {
-    console.log(ticker, this.state.companies.length, this.state.companies)
     if (this.state.companies.length > 1) {
       for (var i = 0; i < this.state.companies.length; i++) {
         if (ticker === this.state.companies[i].overview.Symbol) {
           var updatedCompanies = Object.assign(this.state.companies);
           updatedCompanies.splice(i, 1);
-          console.log(updatedCompanies)
-          this.setState({companies: updatedCompanies});
+          if (this.state.display === i && i !== 0) {
+            this.setState({companies: updatedCompanies, display: i - 1});
+          } else {
+            this.setState({companies: updatedCompanies});
+          }
         }
       }
     }
+  }
+  handleTickerFinancialDisplayClick(event, index) {
+    this.setState({display: index})
   }
 
   render () {
@@ -93,6 +102,7 @@ class App extends React.Component {
           cashFlowStatementData={this.state.companies[this.state.display].cashFlowStatement}
           getTickerFinancials={this.getTickerFinancials}
           removeCompany={this.removeCompany}
+          changeCurrentTickerDisplay={this.handleTickerFinancialDisplayClick}
         />
       </div>
     )
