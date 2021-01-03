@@ -49,15 +49,15 @@ const Overview = (props) => {
             </TableRow>
             <TableRow>
               <TableCell width="300">Shares Outstanding:</TableCell>
-              <TableCell>{(props.overviewData.SharesOutstanding / 1000000).toFixed(2)}M</TableCell>
+              <TableCell>{(props.overviewData.SharesOutstanding / 1000000000).toFixed(2)}B</TableCell>
             </TableRow>
             <TableRow>
               <TableCell width="300">Shares Float:</TableCell>
-              <TableCell>{(props.overviewData.SharesFloat / 1000000).toFixed(2)}M</TableCell>
+              <TableCell>{(props.overviewData.SharesFloat / 1000000000).toFixed(2)}B</TableCell>
             </TableRow>
             <TableRow>
               <TableCell width="300">Shares Short:</TableCell>
-              <TableCell>{(props.overviewData.SharesShort / 1000000).toFixed(2)}M</TableCell>
+              <TableCell>{(props.overviewData.SharesShort / 1000000000).toFixed(2)}B</TableCell>
             </TableRow>
           </TableBody>
         </Table>

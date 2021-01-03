@@ -28,6 +28,7 @@ class App extends React.Component {
     this.getTickerFinancials = this.getTickerFinancials.bind(this);
     this.removeCompany = this.removeCompany.bind(this);
     this.handleTickerFinancialDisplayClick = this.handleTickerFinancialDisplayClick.bind(this);
+    this.handleClearTickers = this.handleClearTickers.bind(this);
   }
 
   componentDidMount() {
@@ -87,11 +88,22 @@ class App extends React.Component {
   handleTickerFinancialDisplayClick(event, index) {
     this.setState({display: index})
   }
+  handleClearTickers(event) {
+    event.preventDefault();
+    this.setState({companies: [
+      {
+        overview: dummyDataOverview,
+        incomeStatement: dummyDataIncome,
+        balanceSheet: dummyDataBalance,
+        cashFlowStatement: dummyDataCashFlow
+      }
+    ], display: '0'})
+  }
 
   render () {
     return (
       <div>
-        <Header data={this.state.companies[this.state.display].overview}/>
+        <Header data={this.state.companies[this.state.display].overview} clearTickers={this.handleClearTickers}/>
         <Sidebar />
         <Graph />
         <Financials

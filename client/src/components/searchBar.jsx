@@ -13,6 +13,7 @@ class SearchBar extends React.Component {
   handleFormSubmit(event) {
     event.preventDefault();
     this.props.getTickerFinancials(this.state.ticker);
+    this.setState({ticker: ''})
   }
   handleOnChange(event) {
     this.setState({ticker: event.target.value})
@@ -21,7 +22,7 @@ class SearchBar extends React.Component {
   render () {
     return (
       <form onSubmit={this.handleFormSubmit}>
-        <input placeholder="Add ticker.." onChange={(e) => {this.handleOnChange(e)}}></input>
+        <input placeholder="Add ticker.." value={this.state.ticker} onChange={(e) => {this.handleOnChange(e)}} ></input>
       </form>
     )
   }
