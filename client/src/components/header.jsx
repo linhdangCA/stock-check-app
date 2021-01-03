@@ -4,10 +4,7 @@ const Header = (props) => {
   return (
     <div>
       <div>
-        {props.data.Name}
-      </div>
-      <div>
-        {props.data.Symbol}
+        Stock Check
       </div>
     </div>
   )

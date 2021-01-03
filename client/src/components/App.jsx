@@ -63,7 +63,7 @@ class App extends React.Component {
           } else {
             var updatedCompanies = Object.assign(this.state.companies);
             updatedCompanies.push(data);
-            this.setState({companies: updatedCompanies});
+            this.setState({companies: updatedCompanies, display: this.state.companies.length - 1});
           }
         }
       })
@@ -91,8 +91,8 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <Sidebar />
         <Header data={this.state.companies[this.state.display].overview}/>
+        <Sidebar />
         <Graph />
         <Financials
           companies={this.state.companies}
