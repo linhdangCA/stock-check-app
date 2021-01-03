@@ -1,31 +1,25 @@
 import React from 'react'
 import axios from 'axios'
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
-class SearchBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ticker: ''
-    }
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-  }
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
-  handleFormSubmit(event) {
-    event.preventDefault();
-    this.props.getTickerFinancials(this.state.ticker);
-    this.setState({ticker: ''})
-  }
-  handleOnChange(event) {
-    this.setState({ticker: event.target.value})
-  }
+const SearchBar = (props) => {
+  const classes = useStyles();
 
-  render () {
-    return (
-      <form onSubmit={this.handleFormSubmit}>
-        <input placeholder="Add ticker.." value={this.state.ticker} onChange={(e) => {this.handleOnChange(e)}} ></input>
-      </form>
-    )
-  }
+  return (
+    <form className={classes.root} noValidate autoComplete="off" onSubmit={(e) =>{props.handleTickerFormSubmit(e)}}>
+      <TextField id="outlined-basic" label="Add ticker" variant="outlined" value={props.ticker} onChange={(e) => {props.handleTickerOnChange(e)}} ></TextField>
+    </form>
+  )
 }
 
 export default SearchBar

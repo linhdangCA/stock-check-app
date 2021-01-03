@@ -23,12 +23,15 @@ class App extends React.Component {
           cashFlowStatement: dummyDataCashFlow
         }
       ],
-      display: '0'
+      display: '0',
+      ticker: ''
     }
     this.getTickerFinancials = this.getTickerFinancials.bind(this);
     this.removeCompany = this.removeCompany.bind(this);
     this.handleTickerFinancialDisplayClick = this.handleTickerFinancialDisplayClick.bind(this);
     this.handleClearTickers = this.handleClearTickers.bind(this);
+    this.handleTickerFormSubmit = this.handleTickerFormSubmit.bind(this);
+    this.handleTickerOnChange = this.handleTickerOnChange.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +47,14 @@ class App extends React.Component {
     })
   }
 
+  handleTickerFormSubmit(event) {
+    event.preventDefault();
+    this.getTickerFinancials(this.state.ticker);
+    this.setState({ticker: ''})
+  }
+  handleTickerOnChange(event) {
+    this.setState({ticker: event.target.value})
+  }
   getTickerFinancials(ticker) {
     axios.get('http://localhost:3000/ticker', {
       params: {
@@ -76,10 +87,12 @@ class App extends React.Component {
         if (ticker === this.state.companies[i].overview.Symbol) {
           var updatedCompanies = Object.assign(this.state.companies);
           updatedCompanies.splice(i, 1);
-          if (this.state.display === i && i !== 0) {
-            this.setState({companies: updatedCompanies, display: i - 1});
-          } else {
+          if (this.state.companies.length === 1) {
+            this.setState({companies: updatedCompanies, display: '0'});
+          } else if (this.state.companies[i] !== this.state.companies.length - 1) {
             this.setState({companies: updatedCompanies});
+          } else {
+            this.setState({companies: updatedCompanies, display: i - 1});
           }
         }
       }
@@ -115,6 +128,9 @@ class App extends React.Component {
           getTickerFinancials={this.getTickerFinancials}
           removeCompany={this.removeCompany}
           changeCurrentTickerDisplay={this.handleTickerFinancialDisplayClick}
+          handleTickerFormSubmit={this.handleTickerFormSubmit}
+          handleTickerOnChange={this.handleTickerOnChange}
+          ticker={this.state.ticker}
         />
       </div>
     )

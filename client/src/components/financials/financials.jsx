@@ -13,6 +13,9 @@ const Financials = (props) => {
         getTickerFinancials={props.getTickerFinancials}
         removeCompany={props.removeCompany}
         changeCurrentTickerDisplay={props.changeCurrentTickerDisplay}
+        handleTickerFormSubmit={props.handleTickerFormSubmit}
+        handleTickerOnChange={props.handleTickerOnChange}
+        ticker={props.ticker}
       />
       <Overview overviewData={props.overviewData}/>
       <IncomeStatement incomeStatementData={props.incomeStatementData}/>
