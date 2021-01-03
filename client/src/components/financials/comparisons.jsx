@@ -10,13 +10,15 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
-  deleteCursor: "pointer"
-})
+  pointerCursor: "pointer",
+}))
 const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, changeCurrentTickerDisplay, handleTickerFormSubmit, handleTickerOnChange, ticker}) => {
   const classes = useStyles();
   const rows = [];
@@ -94,11 +96,17 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
           <TableBody>
               {rows.map((row, index) => (
                 <TableRow key={row.ticker}>
-                  <TableCell onClick={(e) => {changeCurrentTickerDisplay(e, index)}}>{row.ticker}</TableCell>
+                  <TableCell>
+                    <Typography>
+                      <Link href="#" onClick={(e) => {changeCurrentTickerDisplay(e, index)}} className={classes.pointerCursor}>
+                        {row.ticker}
+                      </Link>
+                    </Typography>
+                  </TableCell>
                   <TableCell align="center" onClick={(e)=>{removeCompany(e, row.ticker)}}>
                     {companies.length > 1 ?
                       <IconButton aria-label="delete">
-                        <DeleteForeverOutlinedIcon className={classes.deleteCursor} />
+                        <DeleteForeverOutlinedIcon className={classes.pointerCursor} />
                       </IconButton>
                       : ''
                     }
