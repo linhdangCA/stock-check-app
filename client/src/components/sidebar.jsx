@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'sticky',
     overflow: 'auto',
     maxHeight: 720,
+    fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(','),
   },
   listSection: {
     backgroundColor: 'inherit',
@@ -33,7 +34,7 @@ const Sidebar = (props) => {
   const classes = useStyles();
   return (
     <List className={classes.root} subheader={<li />}>
-      <div>Top 100 Most Active Stocks: {todayFormatted}</div>
+      <div>Top 100<br /> Most Active Stocks <br />{todayFormatted}</div>
       {['01-10', '11-20', '21-30', '31-40', '41-50', '51-60', '61-70', '71-80', '81-90', '91-100'].map((sectionId) => (
         <li key={`section-${sectionId}`} className={classes.listSection}>
           <ul className={classes.ul}>

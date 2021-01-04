@@ -133,7 +133,7 @@ class App extends React.Component {
         <Header data={this.state.companies[this.state.display].overview} clearTickers={this.handleClearTickers}/>
         <div style={{ width: '100%' }}>
           <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
-            <Box p={1} width="10%">
+            <Box p={1} width="15%">
               <Sidebar top100={this.state.top100} getTickerFinancials={this.getTickerFinancials}/>
             </Box>
             <Box p={1}>
