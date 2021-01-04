@@ -20,6 +20,16 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
+  '@global': {
+    // You should target [class*="MuiButton-root"] instead if you nest themes.
+    '.MuiTableHead-root': {
+      justifyContent: 'center',
+      backgroundColor: 'lightgrey',
+    },
+  },
+  thead: {
+    backgroundColor: 'lightgrey',
+  },
   pointerCursor: "pointer",
 }))
 const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, changeCurrentTickerDisplay, handleTickerFormSubmit, handleTickerOnChange, ticker}) => {
@@ -82,7 +92,7 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
     <div>
       <TableContainer component={Paper}>
         <Table className={classes.table} size="small" aria-label="collapsible table">
-          <TableHead>
+          <TableHead className={classes.thead}>
             <TableRow width="100%">
               <TableCell width="100%">Comparison Analysis (most recent 10k)</TableCell>
               <TableCell>
@@ -100,7 +110,9 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
                     <TableBody>
                       <TableRow>
                         <TableCell width="300">Company</TableCell>
-                        <TableCell align="center">Remove</TableCell>
+                        <TableCell align="center">
+                          {companies.length > 1 ? 'Remove' : ''}
+                        </TableCell>
                         <TableCell align="center">DCF (intrinsic value)</TableCell>
                         <TableCell align="center">Mkt Cap</TableCell>
                         <TableCell align="center">Current Ratio</TableCell>

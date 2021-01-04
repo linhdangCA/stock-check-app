@@ -5,6 +5,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   listSection: {
     backgroundColor: 'inherit',
+    justifyContent: 'flex-end',
   },
   ul: {
     backgroundColor: 'inherit',
@@ -25,36 +28,42 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     cursor: 'pointer',
-  }
+  },
+  '@global': {
+    // You should target [class*="MuiButton-root"] instead if you nest themes.
+    '.MuiListItem-root': {
+      justifyContent: 'flex-start',
+    },
+  },
 }));
-const today = new Date();
-const todayFormatted = today.toLocaleDateString("en-US")
 
 const Sidebar = (props) => {
   const classes = useStyles();
   return (
-    <List className={classes.root} subheader={<li />}>
-      <div>Top 100<br /> Most Active Stocks <br />{todayFormatted}</div>
-      {['01-10', '11-20', '21-30', '31-40', '41-50', '51-60', '61-70', '71-80', '81-90', '91-100'].map((sectionId) => (
-        <li key={`section-${sectionId}`} className={classes.listSection}>
-          <ul className={classes.ul}>
-            <ListSubheader>
-              {`Tickers ${sectionId}`}
-            </ListSubheader>
-            {props.top100.map((ticker, index) => {
-              var currentSection = Number(sectionId.substring(0, 2));
-              if (index + 1 >= currentSection && index + 1 <= currentSection + 9) {
-                return (
-                  <ListItem key={ticker}>
-                    <Link href="#" className={classes.text} onClick={() => {props.getTickerFinancials(ticker)}}>{ticker}</Link>
-                  </ListItem>
-                )
-              }
-            })}
-          </ul>
-        </li>
-      ))}
-    </List>
+    <Hidden mdDown>
+      <List className={classes.root} subheader={<li />} dense align="flex-start">
+        {['01-10', '11-20', '21-30', '31-40', '41-50', '51-60', '61-70', '71-80', '81-90', '91-100'].map((sectionId) => (
+          <li key={`section-${sectionId}`} className={classes.listSection}>
+            <ul className={classes.ul}>
+              <ListSubheader>
+                {`Tickers ${sectionId}`}
+              </ListSubheader>
+              {props.top100.map((ticker, index) => {
+                var currentSection = Number(sectionId.substring(0, 2));
+                if (index + 1 >= currentSection && index + 1 <= currentSection + 9) {
+                  return (
+                    <ListItem key={ticker}>
+                      <span>{index + 1}. &nbsp; </span><Link href="#" className={classes.text} onClick={() => {props.getTickerFinancials(ticker)}}>{ticker}</Link>
+                    </ListItem>
+                  )
+                }
+              })}
+            </ul>
+          </li>
+        ))}
+      </List>
+    </Hidden>
+
   )
 }
 

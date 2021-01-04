@@ -128,12 +128,18 @@ class App extends React.Component {
   }
 
   render () {
+    const today = new Date();
+    const todayFormatted = today.toLocaleDateString("en-US")
+
     return (
       <div>
         <Header data={this.state.companies[this.state.display].overview} clearTickers={this.handleClearTickers}/>
         <div style={{ width: '100%' }}>
           <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
-            <Box p={1} width="15%">
+            <Box p={1} width="10%">
+              <Box align="center">
+                  Top 100 <br /> Most Active Stocks <br /> {todayFormatted}
+              </Box>
               <Sidebar top100={this.state.top100} getTickerFinancials={this.getTickerFinancials}/>
             </Box>
             <Box p={1}>
