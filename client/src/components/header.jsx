@@ -23,19 +23,17 @@ const Header = (props) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography varient="h6" className={classes.title}>
-            STOCK CHECK
-          </Typography>
-          <Button color="inherit" onClick={(e) => {props.clearTickers(e)}}>Clear</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <AppBar className={classes.root} position="sticky">
+      <Toolbar>
+        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <MenuIcon />
+        </IconButton>
+        <Typography varient="h6" className={classes.title}>
+          STOCK CHECK
+        </Typography>
+        <Button variant="contained" color="red" onClick={(e) => {props.clearTickers(e)}}>Clear</Button>
+      </Toolbar>
+    </AppBar>
   )
 }
 

@@ -10,6 +10,7 @@ import dummyDataBalance from '../dummyData/dummyDataBalance.js'
 import dummyDataCashFlow from '../dummyData/dummyDataCashFlow.js'
 import Button from '@material-ui/core/Button'
 import axios from 'axios'
+import Box from '@material-ui/core/Box';
 
 class App extends React.Component {
   constructor(props) {
@@ -117,21 +118,33 @@ class App extends React.Component {
     return (
       <div>
         <Header data={this.state.companies[this.state.display].overview} clearTickers={this.handleClearTickers}/>
-        <Sidebar />
-        <Graph />
-        <Financials
-          companies={this.state.companies}
-          overviewData={this.state.companies[this.state.display].overview}
-          incomeStatementData={this.state.companies[this.state.display].incomeStatement}
-          balanceSheetData={this.state.companies[this.state.display].balanceSheet}
-          cashFlowStatementData={this.state.companies[this.state.display].cashFlowStatement}
-          getTickerFinancials={this.getTickerFinancials}
-          removeCompany={this.removeCompany}
-          changeCurrentTickerDisplay={this.handleTickerFinancialDisplayClick}
-          handleTickerFormSubmit={this.handleTickerFormSubmit}
-          handleTickerOnChange={this.handleTickerOnChange}
-          ticker={this.state.ticker}
-        />
+        <div style={{ width: '100%' }}>
+          <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
+            <Box p={1}>
+              <Sidebar />
+            </Box>
+            <Box p={1}>
+              <Box>
+                <Graph />
+              </Box>
+              <Box p={1}>
+                <Financials
+                  companies={this.state.companies}
+                  overviewData={this.state.companies[this.state.display].overview}
+                  incomeStatementData={this.state.companies[this.state.display].incomeStatement}
+                  balanceSheetData={this.state.companies[this.state.display].balanceSheet}
+                  cashFlowStatementData={this.state.companies[this.state.display].cashFlowStatement}
+                  getTickerFinancials={this.getTickerFinancials}
+                  removeCompany={this.removeCompany}
+                  changeCurrentTickerDisplay={this.handleTickerFinancialDisplayClick}
+                  handleTickerFormSubmit={this.handleTickerFormSubmit}
+                  handleTickerOnChange={this.handleTickerOnChange}
+                  ticker={this.state.ticker}
+                />
+              </Box>
+            </Box>
+          </Box>
+          </div>
       </div>
     )
   }
