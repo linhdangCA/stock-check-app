@@ -67,6 +67,11 @@ class App extends React.Component {
       .catch((err) => console.log(err))
   }
   getTickerFinancials(ticker) {
+    for (var i = 0; i < this.state.companies.length; i++) {
+      if (ticker === this.state.companies[i].overview.Symbol) {
+        return;
+      }
+    }
     axios.get('http://localhost:3000/ticker', {
       params: {
         ticker: ticker
