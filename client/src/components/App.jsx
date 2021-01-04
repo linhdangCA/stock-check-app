@@ -130,7 +130,7 @@ class App extends React.Component {
         <div style={{ width: '100%' }}>
           <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
             <Box p={1} width="10%">
-              <Sidebar top100={this.state.top100}/>
+              <Sidebar top100={this.state.top100} getTickerFinancials={this.getTickerFinancials}/>
             </Box>
             <Box p={1}>
               <Box>
