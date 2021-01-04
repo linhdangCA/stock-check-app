@@ -1,7 +1,6 @@
 import React from 'react'
 import SearchBar from './searchBar.jsx'
 import Header from './header.jsx'
-import Graph from './graph.jsx'
 import Financials from './financials/financials.jsx'
 import Sidebar from './sidebar.jsx'
 import dummyDataOverview from '../dummyData/dummyDataOverview.js'
@@ -138,24 +137,19 @@ class App extends React.Component {
               <Sidebar top100={this.state.top100} getTickerFinancials={this.getTickerFinancials}/>
             </Box>
             <Box p={1}>
-              <Box>
-                <Graph />
-              </Box>
-              <Box p={1}>
-                <Financials
-                  companies={this.state.companies}
-                  overviewData={this.state.companies[this.state.display].overview}
-                  incomeStatementData={this.state.companies[this.state.display].incomeStatement}
-                  balanceSheetData={this.state.companies[this.state.display].balanceSheet}
-                  cashFlowStatementData={this.state.companies[this.state.display].cashFlowStatement}
-                  getTickerFinancials={this.getTickerFinancials}
-                  removeCompany={this.removeCompany}
-                  changeCurrentTickerDisplay={this.handleTickerFinancialDisplayClick}
-                  handleTickerFormSubmit={this.handleTickerFormSubmit}
-                  handleTickerOnChange={this.handleTickerOnChange}
-                  ticker={this.state.ticker}
-                />
-              </Box>
+              <Financials
+                companies={this.state.companies}
+                overviewData={this.state.companies[this.state.display].overview}
+                incomeStatementData={this.state.companies[this.state.display].incomeStatement}
+                balanceSheetData={this.state.companies[this.state.display].balanceSheet}
+                cashFlowStatementData={this.state.companies[this.state.display].cashFlowStatement}
+                getTickerFinancials={this.getTickerFinancials}
+                removeCompany={this.removeCompany}
+                changeCurrentTickerDisplay={this.handleTickerFinancialDisplayClick}
+                handleTickerFormSubmit={this.handleTickerFormSubmit}
+                handleTickerOnChange={this.handleTickerOnChange}
+                ticker={this.state.ticker}
+              />
             </Box>
           </Box>
           </div>

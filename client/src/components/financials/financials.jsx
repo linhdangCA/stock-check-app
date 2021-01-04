@@ -4,10 +4,12 @@ import IncomeStatement from './incomeStatement.jsx'
 import BalanceSheet from './balanceSheet.jsx'
 import CashFlowStatement from './cashFlowStatement.jsx'
 import ComparisonAnalysis from './comparisons.jsx'
+import Graph from './graph.jsx'
 
 const Financials = (props) => {
   return (
     <div>
+      <Graph />
       <ComparisonAnalysis
         companies={props.companies}
         getTickerFinancials={props.getTickerFinancials}

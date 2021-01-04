@@ -12,15 +12,19 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    minWidth: 650,
+    minWidth: 1250,
   },
   pointerCursor: "pointer",
 }))
 const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, changeCurrentTickerDisplay, handleTickerFormSubmit, handleTickerOnChange, ticker}) => {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(true);
   const rows = [];
 
   function createData(ticker, dcf, mktcap, ca, d_ta, d_e, ev_revenue) {
@@ -77,23 +81,29 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
   return (
     <div>
       <TableContainer component={Paper}>
-        <Table className={classes.table} size="small" aria-label="a dense table">
+        <Table className={classes.table} size="small" aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell width="300">Comparison Analysis (most recent 10k)</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell width="300">Company</TableCell>
-              <TableCell align="center">Remove</TableCell>
-              <TableCell align="center">DCF (intrinsic value)</TableCell>
-              <TableCell align="center">Mkt Cap</TableCell>
-              <TableCell align="center">Current Ratio</TableCell>
-              <TableCell align="center">Debt/Total Assets</TableCell>
-              <TableCell align="center">Debt/Equity</TableCell>
-              <TableCell align="center">EV/revenue</TableCell>
+              <TableCell width="100%">Comparison Analysis (most recent 10k)</TableCell>
+              <TableCell>
+              <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </IconButton>
+            </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <TableRow>
+                <TableCell width="300">Company</TableCell>
+                <TableCell align="center">Remove</TableCell>
+                <TableCell align="center">DCF (intrinsic value)</TableCell>
+                <TableCell align="center">Mkt Cap</TableCell>
+                <TableCell align="center">Current Ratio</TableCell>
+                <TableCell align="center">Debt/Total Assets</TableCell>
+                <TableCell align="center">Debt/Equity</TableCell>
+                <TableCell align="center">EV/revenue</TableCell>
+              </TableRow>
               {rows.map((row, index) => (
                 <TableRow key={row.ticker}>
                   <TableCell>
@@ -129,6 +139,7 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
                   />
                 </TableCell>
               </TableRow>
+            </Collapse>
           </TableBody>
         </Table>
       </TableContainer>
