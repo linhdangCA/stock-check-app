@@ -18,7 +18,7 @@ import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    minWidth: 1250,
+    minWidth: 650,
   },
   pointerCursor: "pointer",
 }))
@@ -83,7 +83,7 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
       <TableContainer component={Paper}>
         <Table className={classes.table} size="small" aria-label="collapsible table">
           <TableHead>
-            <TableRow>
+            <TableRow width="100%">
               <TableCell width="100%">Comparison Analysis (most recent 10k)</TableCell>
               <TableCell>
               <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
@@ -93,53 +93,61 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
             </TableRow>
           </TableHead>
           <TableBody>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <TableRow>
-                <TableCell width="300">Company</TableCell>
-                <TableCell align="center">Remove</TableCell>
-                <TableCell align="center">DCF (intrinsic value)</TableCell>
-                <TableCell align="center">Mkt Cap</TableCell>
-                <TableCell align="center">Current Ratio</TableCell>
-                <TableCell align="center">Debt/Total Assets</TableCell>
-                <TableCell align="center">Debt/Equity</TableCell>
-                <TableCell align="center">EV/revenue</TableCell>
-              </TableRow>
-              {rows.map((row, index) => (
-                <TableRow key={row.ticker}>
-                  <TableCell>
-                    <Typography>
-                      <Link href="#" onClick={(e) => {changeCurrentTickerDisplay(e, index)}} className={classes.pointerCursor}>
-                        {row.ticker}
-                      </Link>
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="center" onClick={(e)=>{removeCompany(e, row.ticker)}}>
-                    {companies.length > 1 ?
-                      <IconButton aria-label="delete">
-                        <DeleteForeverOutlinedIcon className={classes.pointerCursor} />
-                      </IconButton>
-                      : ''
-                    }
-                  </TableCell>
-                  <TableCell align="center">{row.dcf}</TableCell>
-                  <TableCell align="center">{row.mktcap}</TableCell>
-                  <TableCell align="center">{row.ca}</TableCell>
-                  <TableCell align="center">{row.d_ta}</TableCell>
-                  <TableCell align="center">{row.d_e}</TableCell>
-                  <TableCell align="center">{row.ev_revenue}</TableCell>
-                </TableRow>
-              ))}
-              <TableRow>
-                <TableCell>
-                  <SearchBar
-                    handleTickerFormSubmit={handleTickerFormSubmit}
-                    handleTickerOnChange={handleTickerOnChange}
-                    getTickerFinancials={getTickerFinancials}
-                    ticker={ticker}
-                  />
-                </TableCell>
-              </TableRow>
-            </Collapse>
+            <TableRow>
+              <TableCell>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  <Table size="small">
+                    <TableBody>
+                      <TableRow>
+                        <TableCell width="300">Company</TableCell>
+                        <TableCell align="center">Remove</TableCell>
+                        <TableCell align="center">DCF (intrinsic value)</TableCell>
+                        <TableCell align="center">Mkt Cap</TableCell>
+                        <TableCell align="center">Current Ratio</TableCell>
+                        <TableCell align="center">Debt/Total Assets</TableCell>
+                        <TableCell align="center">Debt/Equity</TableCell>
+                        <TableCell align="center">EV/revenue</TableCell>
+                      </TableRow>
+                      {rows.map((row, index) => (
+                        <TableRow key={row.ticker}>
+                          <TableCell>
+                            <Typography>
+                              <Link href="#" onClick={(e) => {changeCurrentTickerDisplay(e, index)}} className={classes.pointerCursor}>
+                                {row.ticker}
+                              </Link>
+                            </Typography>
+                          </TableCell>
+                          <TableCell align="center" onClick={(e)=>{removeCompany(e, row.ticker)}}>
+                            {companies.length > 1 ?
+                              <IconButton aria-label="delete">
+                                <DeleteForeverOutlinedIcon className={classes.pointerCursor} />
+                              </IconButton>
+                              : ''
+                            }
+                          </TableCell>
+                          <TableCell align="center">{row.dcf}</TableCell>
+                          <TableCell align="center">{row.mktcap}</TableCell>
+                          <TableCell align="center">{row.ca}</TableCell>
+                          <TableCell align="center">{row.d_ta}</TableCell>
+                          <TableCell align="center">{row.d_e}</TableCell>
+                          <TableCell align="center">{row.ev_revenue}</TableCell>
+                        </TableRow>
+                      ))}
+                      <TableRow>
+                        <TableCell>
+                          <SearchBar
+                            handleTickerFormSubmit={handleTickerFormSubmit}
+                            handleTickerOnChange={handleTickerOnChange}
+                            getTickerFinancials={getTickerFinancials}
+                            ticker={ticker}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </Collapse>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>

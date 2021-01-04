@@ -46,44 +46,52 @@ const CashFlowStatement = ({cashFlowStatementData}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <Collapse in={open} timeout="auto" unmountOnExit>
             <TableRow>
-                <TableCell width="300">Items</TableCell>
-                  {reversedAnnualReports.map((report) => (
-                <TableCell key={report.fiscalDateEnding} align="right">{report.fiscalDateEnding}</TableCell>
-              ))}
+              <TableCell>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  <Table size="small">
+                    <TableBody>
+                      <TableRow>
+                          <TableCell width="300">Items</TableCell>
+                            {reversedAnnualReports.map((report) => (
+                          <TableCell key={report.fiscalDateEnding} align="right">{report.fiscalDateEnding}</TableCell>
+                        ))}
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Cash Flow From Operations</TableCell>
+                        {reversedAnnualReports.map((report) => (
+                          <TableCell key={report.operatingCashflow} align="right">{(report.operatingCashflow/1000000000).toFixed(2)}</TableCell>
+                        ))}
+                      </TableRow>
+                      <TableRow>
+                      <TableCell>Cash Flow From Investing</TableCell>
+                        {reversedAnnualReports.map((report) => (
+                          <TableCell key={report.cashflowFromInvestment} align="right">{(report.cashflowFromInvestment/1000000000).toFixed(2)}</TableCell>
+                        ))}
+                      </TableRow>
+                      <TableRow>
+                      <TableCell>Cash Flow From Financing</TableCell>
+                        {reversedAnnualReports.map((report) => (
+                          <TableCell key={report.cashflowFromFinancing} align="right">{(report.cashflowFromFinancing/1000000000).toFixed(2)}</TableCell>
+                        ))}
+                      </TableRow>
+                      <TableRow>
+                      <TableCell>Capital Expenditures</TableCell>
+                        {reversedAnnualReports.map((report) => (
+                          <TableCell key={report.capitalExpenditures} align="right">{(report.capitalExpenditures/1000000000).toFixed(2)}</TableCell>
+                        ))}
+                      </TableRow>
+                      <TableRow>
+                      <TableCell>Free Cash Flow</TableCell>
+                        {reversedAnnualReports.map((report) => (
+                          <TableCell key={report.operatingCashflow/1000000000 - report.capitalExpenditures/1000000000} align="right">{(report.operatingCashflow/1000000000 - report.capitalExpenditures/1000000000).toFixed(2)}</TableCell>
+                        ))}
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </Collapse>
+              </TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell>Cash Flow From Operations</TableCell>
-              {reversedAnnualReports.map((report) => (
-                <TableCell key={report.operatingCashflow} align="right">{(report.operatingCashflow/1000000000).toFixed(2)}</TableCell>
-              ))}
-            </TableRow>
-            <TableRow>
-            <TableCell>Cash Flow From Investing</TableCell>
-              {reversedAnnualReports.map((report) => (
-                <TableCell key={report.cashflowFromInvestment} align="right">{(report.cashflowFromInvestment/1000000000).toFixed(2)}</TableCell>
-              ))}
-            </TableRow>
-            <TableRow>
-            <TableCell>Cash Flow From Financing</TableCell>
-              {reversedAnnualReports.map((report) => (
-                <TableCell key={report.cashflowFromFinancing} align="right">{(report.cashflowFromFinancing/1000000000).toFixed(2)}</TableCell>
-              ))}
-            </TableRow>
-            <TableRow>
-            <TableCell>Capital Expenditures</TableCell>
-              {reversedAnnualReports.map((report) => (
-                <TableCell key={report.capitalExpenditures} align="right">{(report.capitalExpenditures/1000000000).toFixed(2)}</TableCell>
-              ))}
-            </TableRow>
-            <TableRow>
-            <TableCell>Free Cash Flow</TableCell>
-              {reversedAnnualReports.map((report) => (
-                <TableCell key={report.operatingCashflow/1000000000 - report.capitalExpenditures/1000000000} align="right">{(report.operatingCashflow/1000000000 - report.capitalExpenditures/1000000000).toFixed(2)}</TableCell>
-              ))}
-            </TableRow>
-            </Collapse>
           </TableBody>
         </Table>
       </TableContainer>

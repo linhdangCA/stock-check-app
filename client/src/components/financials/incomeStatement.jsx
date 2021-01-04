@@ -46,26 +46,34 @@ const IncomeStatement = ({incomeStatementData}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <Collapse in={open} timeout="auto" unmountOnExit>
             <TableRow>
-            <TableCell width="300">Items</TableCell>
-              {reversedAnnualReports.map((report) => (
-                <TableCell key={report.fiscalDateEnding} align="right">{report.fiscalDateEnding}</TableCell>
-              ))}
+              <TableCell>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  <Table size="small">
+                    <TableBody>
+                      <TableRow>
+                      <TableCell width="300">Items</TableCell>
+                        {reversedAnnualReports.map((report) => (
+                          <TableCell key={report.fiscalDateEnding} align="right">{report.fiscalDateEnding}</TableCell>
+                        ))}
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Total Revenue</TableCell>
+                        {reversedAnnualReports.map((report) => (
+                          <TableCell key={report.totalRevenue} align="right">{(report.totalRevenue/1000000000).toFixed(2)}</TableCell>
+                        ))}
+                      </TableRow>
+                      <TableRow>
+                      <TableCell>Net Income</TableCell>
+                        {reversedAnnualReports.map((report) => (
+                          <TableCell key={report.netIncome} align="right">{(report.netIncome/1000000000).toFixed(2)}</TableCell>
+                        ))}
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </Collapse>
+              </TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell>Total Revenue</TableCell>
-              {reversedAnnualReports.map((report) => (
-                <TableCell key={report.totalRevenue} align="right">{(report.totalRevenue/1000000000).toFixed(2)}</TableCell>
-              ))}
-            </TableRow>
-            <TableRow>
-            <TableCell>Net Income</TableCell>
-              {reversedAnnualReports.map((report) => (
-                <TableCell key={report.netIncome} align="right">{(report.netIncome/1000000000).toFixed(2)}</TableCell>
-              ))}
-            </TableRow>
-            </Collapse>
           </TableBody>
         </Table>
       </TableContainer>
