@@ -9,6 +9,12 @@ const PORT = 3000;
 app.use(express.static(__dirname + `/../client/dist`))
 app.use(parser.json())
 
+app.get('/top100', (req, res) => {
+  axios.get('https://finance.yahoo.com/most-active?offset=0&count=100')
+    .then((data) => console.log(data))
+    .catch((err) => res.sendStatus(400))
+})
+
 app.get('/ticker', (req, res) => {
   function getOverview() {
     return axios.get(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${req.query.ticker}&apikey=${key.api}`)
@@ -31,7 +37,7 @@ app.get('/ticker', (req, res) => {
     compiledData.push(results[3].data);
     res.send(compiledData);
   })
-  .catch((err) => console.log(err));
+  .catch((err) => res.sendStatus(400));
 })
 
 app.listen(3000, () => {

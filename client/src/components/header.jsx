@@ -31,7 +31,7 @@ const Header = (props) => {
         <Typography varient="h6" className={classes.title}>
           STOCK CHECK
         </Typography>
-        <Button variant="contained" color="red" onClick={(e) => {props.clearTickers(e)}}>Clear</Button>
+        <Button variant="contained" color="default" onClick={(e) => {props.clearTickers(e)}}>Clear</Button>
       </Toolbar>
     </AppBar>
   )

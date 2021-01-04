@@ -25,7 +25,8 @@ class App extends React.Component {
         }
       ],
       display: '0',
-      ticker: ''
+      ticker: '',
+      top100: [],
     }
     this.getTickerFinancials = this.getTickerFinancials.bind(this);
     this.removeCompany = this.removeCompany.bind(this);
@@ -33,9 +34,11 @@ class App extends React.Component {
     this.handleClearTickers = this.handleClearTickers.bind(this);
     this.handleTickerFormSubmit = this.handleTickerFormSubmit.bind(this);
     this.handleTickerOnChange = this.handleTickerOnChange.bind(this);
+    this.getTop100Tickers = this.getTop100Tickers.bind(this);
   }
 
   componentDidMount() {
+    this.getTop100Tickers();
     this.setState({
       companies: [
         {
@@ -56,6 +59,13 @@ class App extends React.Component {
   handleTickerOnChange(event) {
     this.setState({ticker: event.target.value})
   }
+  getTop100Tickers() {
+    axios.get('http://localhost:3000/top100')
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => console.log(err))
+  }
   getTickerFinancials(ticker) {
     axios.get('http://localhost:3000/ticker', {
       params: {
@@ -63,7 +73,6 @@ class App extends React.Component {
       }
     })
       .then((res) => {
-        console.log(res)
         if (res.data[0].Symbol !== undefined) {
           var data = {
             overview: res.data[0],
@@ -120,8 +129,8 @@ class App extends React.Component {
         <Header data={this.state.companies[this.state.display].overview} clearTickers={this.handleClearTickers}/>
         <div style={{ width: '100%' }}>
           <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
-            <Box p={1}>
-              <Sidebar />
+            <Box p={1} width="10%">
+              <Sidebar getTop100={this.getTop100Tickers}/>
             </Box>
             <Box p={1}>
               <Box>
