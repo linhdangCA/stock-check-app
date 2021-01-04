@@ -40,13 +40,17 @@ app.get('/ticker', (req, res) => {
   function getCashflow() {
     return axios.get(`https://www.alphavantage.co/query?function=CASH_FLOW&symbol=${req.query.ticker}&apikey=${key.api}`)
   }
-  Promise.all([getOverview(), getIncome(), getBalance(), getCashflow()])
+  function getTimeSeriesMonthly() {
+    return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${req.query.ticker}&apikey=${key.api}`)
+  }
+  Promise.all([getOverview(), getIncome(), getBalance(), getCashflow(), getTimeSeriesMonthly()])
     .then(function(results) {
       var compiledData = [];
       compiledData.push(results[0].data);
       compiledData.push(results[1].data);
       compiledData.push(results[2].data);
       compiledData.push(results[3].data);
+      compiledData.push(results[4].data);
       res.send(compiledData);
     })
     .catch((err) => res.sendStatus(400));

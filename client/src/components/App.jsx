@@ -7,9 +7,11 @@ import dummyDataOverview from '../dummyData/dummyDataOverview.js'
 import dummyDataIncome from '../dummyData/dummyDataIncome.js'
 import dummyDataBalance from '../dummyData/dummyDataBalance.js'
 import dummyDataCashFlow from '../dummyData/dummyDataCashFlow.js'
+import dummyDataMonthly from '../dummyData/dummyDataMonthly.js'
 import Button from '@material-ui/core/Button'
 import axios from 'axios'
 import Box from '@material-ui/core/Box';
+import Hidden from '@material-ui/core/Hidden';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,7 +22,8 @@ class App extends React.Component {
           overview: dummyDataOverview,
           incomeStatement: dummyDataIncome,
           balanceSheet: dummyDataBalance,
-          cashFlowStatement: dummyDataCashFlow
+          cashFlowStatement: dummyDataCashFlow,
+          timeSeriesMonthly: dummyDataMonthly
         }
       ],
       display: '0',
@@ -44,7 +47,8 @@ class App extends React.Component {
           overview: dummyDataOverview,
           incomeStatement: dummyDataIncome,
           balanceSheet: dummyDataBalance,
-          cashFlowStatement: dummyDataCashFlow
+          cashFlowStatement: dummyDataCashFlow,
+          timeSeriesMonthly: dummyDataMonthly
         }
       ]
     })
@@ -82,7 +86,8 @@ class App extends React.Component {
             overview: res.data[0],
             incomeStatement: res.data[1],
             balanceSheet: res.data[2],
-            cashFlowStatement: res.data[3]
+            cashFlowStatement: res.data[3],
+            timeSeriesMonthly: res.data[4]
           }
           if (this.state.companies[0].overview.Symbol === 'IBM - example') {
             this.setState({companies: [data]})
@@ -122,7 +127,8 @@ class App extends React.Component {
         overview: dummyDataOverview,
         incomeStatement: dummyDataIncome,
         balanceSheet: dummyDataBalance,
-        cashFlowStatement: dummyDataCashFlow
+        cashFlowStatement: dummyDataCashFlow,
+        timeSeriesMonthly: dummyDataMonthly
       }
     ], display: '0'})
   }
@@ -137,9 +143,11 @@ class App extends React.Component {
         <div style={{ width: '100%' }}>
           <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
             <Box p={1} width="10%">
-              <Box align="center">
-                  Top 100 <br /> Most Active Stocks <br /> {todayFormatted}
-              </Box>
+              <Hidden mdDown>
+                <Box align="center">
+                    Top 100 <br /> Most Active Stocks <br /> {todayFormatted}
+                </Box>
+              </Hidden>
               <Sidebar top100={this.state.top100} getTickerFinancials={this.getTickerFinancials}/>
             </Box>
             <Box p={1}>

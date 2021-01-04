@@ -37,8 +37,8 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
   const [open, setOpen] = React.useState(true);
   const rows = [];
 
-  function createData(ticker, dcf, mktcap, ca, d_ta, d_e, ev_revenue) {
-    return {ticker, dcf, mktcap, ca, d_ta, d_e, ev_revenue}
+  function createData(ticker, dcf, sp, mktcap, ca, d_ta, d_e, ev_revenue) {
+    return {ticker, dcf, sp, mktcap, ca, d_ta, d_e, ev_revenue}
   }
   function discountedCashFlowCalc(operatingCash, capEx, sharesOutstanding, cash, longTermDebt) {
     var fcf = Number(operatingCash) - Number(capEx);
@@ -62,22 +62,30 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
     return ((Number(longTermDebt) + Number(equity))/Number(revenue)).toFixed(2);
   }
   function populateRow(company) {
-    rows.push(createData(companies[company].overview.Symbol,
-      discountedCashFlowCalc(companies[company].cashFlowStatement.annualReports[0].operatingCashflow,
-        companies[company].cashFlowStatement.annualReports[0].capitalExpenditures,
-        companies[company].overview.SharesOutstanding,
-        companies[company].balanceSheet.annualReports[0].cash,
-        companies[company].balanceSheet.annualReports[0].totalLongTermDebt),
-      (companies[company].overview.MarketCapitalization / 1000000000).toFixed(2)+'B',
-      currentRatio(companies[company].balanceSheet.annualReports[0].totalCurrentAssets, companies[company].balanceSheet.annualReports[0].totalCurrentLiabilities),
-      debtToTotalAssets(companies[company].balanceSheet.annualReports[0].totalLongTermDebt, companies[company].balanceSheet.annualReports[0].totalAssets),
-      debtToEquity(companies[company].balanceSheet.annualReports[0].totalLongTermDebt, companies[company].balanceSheet.annualReports[0].totalShareholderEquity),
-      evToRevenue(companies[company].balanceSheet.annualReports[0].totalLongTermDebt,
-        companies[company].balanceSheet.annualReports[0].totalShareholderEquity,
-        companies[company].incomeStatement.annualReports[0].totalRevenue,
-        companies[company].overview.SharesOutstanding
-      )
-    ));
+    const lastRefresh = companies[company].timeSeriesMonthly.['Meta Data'].['3. Last Refreshed'];
+    const stockClose = Number(companies[company].timeSeriesMonthly.['Monthly Adjusted Time Series'].[lastRefresh].['4. close']).toFixed(2);
+    console.log('lastRefresh', lastRefresh, 'stockClose', stockClose)
+    if (companies[company].cashFlowStatement.annualReports.length === 0 || companies[company].balanceSheet.annualReports.length === 0 || companies[company].incomeStatement.annualReports.length === 0) {
+      rows.push(createData(companies[company].overview.Symbol, 'n/a', stockClose, 'n/a', 'n/a', 'n/a', 'n/a', 'n/a'))
+    } else {
+      rows.push(createData(companies[company].overview.Symbol,
+        discountedCashFlowCalc(companies[company].cashFlowStatement.annualReports[0].operatingCashflow,
+          companies[company].cashFlowStatement.annualReports[0].capitalExpenditures,
+          companies[company].overview.SharesOutstanding,
+          companies[company].balanceSheet.annualReports[0].cash,
+          companies[company].balanceSheet.annualReports[0].totalLongTermDebt),
+        stockClose,
+        (companies[company].overview.MarketCapitalization / 1000000000).toFixed(2)+'B',
+        currentRatio(companies[company].balanceSheet.annualReports[0].totalCurrentAssets, companies[company].balanceSheet.annualReports[0].totalCurrentLiabilities),
+        debtToTotalAssets(companies[company].balanceSheet.annualReports[0].totalLongTermDebt, companies[company].balanceSheet.annualReports[0].totalAssets),
+        debtToEquity(companies[company].balanceSheet.annualReports[0].totalLongTermDebt, companies[company].balanceSheet.annualReports[0].totalShareholderEquity),
+        evToRevenue(companies[company].balanceSheet.annualReports[0].totalLongTermDebt,
+          companies[company].balanceSheet.annualReports[0].totalShareholderEquity,
+          companies[company].incomeStatement.annualReports[0].totalRevenue,
+          companies[company].overview.SharesOutstanding
+        )
+      ));
+    }
   }
   function populateRows() {
     for (var i = 0; i < companies.length; i++) {
@@ -114,6 +122,7 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
                           {companies.length > 1 ? 'Remove' : ''}
                         </TableCell>
                         <TableCell align="center">DCF (intrinsic value)</TableCell>
+                        <TableCell align="center">Stock Price</TableCell>
                         <TableCell align="center">Mkt Cap</TableCell>
                         <TableCell align="center">Current Ratio</TableCell>
                         <TableCell align="center">Debt/Total Assets</TableCell>
@@ -138,6 +147,7 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
                             }
                           </TableCell>
                           <TableCell align="center">{row.dcf}</TableCell>
+                          <TableCell align="center">{row.sp}</TableCell>
                           <TableCell align="center">{row.mktcap}</TableCell>
                           <TableCell align="center">{row.ca}</TableCell>
                           <TableCell align="center">{row.d_ta}</TableCell>
