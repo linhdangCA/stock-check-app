@@ -1,10 +1,15 @@
 import React from 'react'
 
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   return (
     <div>
-      Sidebar
+      <div>
+        Top 100
+      </div>
+      <div>
+        {props.top100.map((ticker, index) => {})}
+      </div>
     </div>
   )
 }

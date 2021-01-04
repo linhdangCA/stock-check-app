@@ -26,7 +26,7 @@ class App extends React.Component {
       ],
       display: '0',
       ticker: '',
-      top100: [],
+      top100: ['AAPL', 'NIO', 'TESLA', 'MSFT'],
     }
     this.getTickerFinancials = this.getTickerFinancials.bind(this);
     this.removeCompany = this.removeCompany.bind(this);
@@ -62,7 +62,7 @@ class App extends React.Component {
   getTop100Tickers() {
     axios.get('http://localhost:3000/top100')
       .then((res) => {
-        console.log(res)
+        this.setState({top100: res.data})
       })
       .catch((err) => console.log(err))
   }
@@ -130,7 +130,7 @@ class App extends React.Component {
         <div style={{ width: '100%' }}>
           <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
             <Box p={1} width="10%">
-              <Sidebar getTop100={this.getTop100Tickers}/>
+              <Sidebar top100={this.state.top100}/>
             </Box>
             <Box p={1}>
               <Box>

@@ -2,6 +2,7 @@ const express = require('express')
 const parser = require('body-parser')
 const axios = require('axios')
 const key = require('../alphaVintage/alphaVintage.js')
+const cheerio = require('cheerio')
 
 const app = express();
 const PORT = 3000;
@@ -10,8 +11,19 @@ app.use(express.static(__dirname + `/../client/dist`))
 app.use(parser.json())
 
 app.get('/top100', (req, res) => {
-  axios.get('https://finance.yahoo.com/most-active?offset=0&count=100')
-    .then((data) => console.log(data))
+  function getTop100() {
+    return axios.get('https://finance.yahoo.com/most-active?offset=0&count=100')
+  }
+  Promise.all([getTop100()])
+    .then((results) => {
+      const $ = cheerio.load(results[0].data);
+      var top100 = [];
+      $('div > div> table > tbody > tr > td > a').each((i, el) => {
+        const ticker = $(el).text();
+        top100.push(ticker)
+      })
+      res.send(top100)
+    })
     .catch((err) => res.sendStatus(400))
 })
 
@@ -29,15 +41,15 @@ app.get('/ticker', (req, res) => {
     return axios.get(`https://www.alphavantage.co/query?function=CASH_FLOW&symbol=${req.query.ticker}&apikey=${key.api}`)
   }
   Promise.all([getOverview(), getIncome(), getBalance(), getCashflow()])
-  .then(function(results) {
-    var compiledData = [];
-    compiledData.push(results[0].data);
-    compiledData.push(results[1].data);
-    compiledData.push(results[2].data);
-    compiledData.push(results[3].data);
-    res.send(compiledData);
-  })
-  .catch((err) => res.sendStatus(400));
+    .then(function(results) {
+      var compiledData = [];
+      compiledData.push(results[0].data);
+      compiledData.push(results[1].data);
+      compiledData.push(results[2].data);
+      compiledData.push(results[3].data);
+      res.send(compiledData);
+    })
+    .catch((err) => res.sendStatus(400));
 })
 
 app.listen(3000, () => {
