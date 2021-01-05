@@ -53,7 +53,7 @@ const Sidebar = (props) => {
                 if (index + 1 >= currentSection && index + 1 <= currentSection + 9) {
                   return (
                     <ListItem key={ticker}>
-                      <span>{index + 1}. &nbsp; </span><Link href="#" className={classes.text} onClick={() => {props.getTickerFinancials(ticker)}}>{ticker}</Link>
+                      <span>{index + 1}. &nbsp; </span><Link href="javascript:void()" className={classes.text} onClick={() => {props.getTickerFinancials(ticker)}}>{ticker}</Link>
                     </ListItem>
                   )
                 }

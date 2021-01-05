@@ -119,6 +119,7 @@ class App extends React.Component {
     }
   }
   handleTickerFinancialDisplayClick(event, index) {
+    event.preventDefault();
     this.setState({display: index})
   }
   handleClearTickers(event) {

@@ -59,19 +59,25 @@ const Graph = (props) => {
               </TableCell>
             </TableRow>
           </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  <LineChart width={700} height={300} data={data}
+                    margin={{ top: 30, right: 30, left: 30, bottom: 30 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" ><Label value="Fiscal Year End" offset={-20} position="insideBottom" /></XAxis>
+                    <YAxis type="number" domain={[0, 'dataMax + 20']} label={{ value: 'Total Revenue ($B)', angle: -90, position: 'insideBottomLeft' }}/>
+                    <Tooltip />
+                    <Legend align="right" />
+                    <Line type="monotone" dataKey={props.incomeStatementData.symbol} stroke="#8884d8" />
+                  </LineChart>
+                </Collapse>
+              </TableCell>
+            </TableRow>
+          </TableBody>
         </Table>
       </TableContainer>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <LineChart width={700} height={300} data={data}
-          margin={{ top: 30, right: 30, left: 30, bottom: 30 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" ><Label value="Fiscal Year End" offset={-20} position="insideBottom" /></XAxis>
-          <YAxis type="number" domain={[0, 'dataMax + 20']} label={{ value: 'Total Revenue ($B)', angle: -90, position: 'insideBottomLeft' }}/>
-          <Tooltip />
-          <Legend align="right" />
-          <Line type="monotone" dataKey={props.incomeStatementData.symbol} stroke="#8884d8" />
-        </LineChart>
-      </Collapse>
     </Box>
   )
 }
