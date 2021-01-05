@@ -72,7 +72,7 @@ class App extends React.Component {
   getTickerFinancials(ticker) {
     for (var i = 0; i < this.state.companies.length; i++) {
       if (ticker === this.state.companies[i].overview.Symbol) {
-        // this.handleTickerFinancialDisplayClick(undefined, i);
+        this.handleTickerFinancialDisplayClick(undefined, i);
         return;
       }
     }
