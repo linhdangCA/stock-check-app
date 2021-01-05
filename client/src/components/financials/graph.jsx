@@ -30,9 +30,6 @@ function reverseOrder(reports) {
 
 function graphData(company) {
   var data = [];
-  if (company.annualReports.length < 5) {
-    return
-  }
   for (var i = 0; i < company.annualReports.length; i++) {
     var metric = {};
     metric.name = (company.annualReports[i].fiscalDateEnding).substring(0, 4);
