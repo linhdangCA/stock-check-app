@@ -9,7 +9,7 @@ import Graph from './graph.jsx'
 const Financials = (props) => {
   return (
     <div>
-      <Graph />
+      <Graph incomeStatementData={props.incomeStatementData}/>
       <ComparisonAnalysis
         companies={props.companies}
         getTickerFinancials={props.getTickerFinancials}
