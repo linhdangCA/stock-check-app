@@ -60,37 +60,37 @@ const BalanceSheet = ({balanceSheetData}) => {
                       <TableRow>
                         <TableCell>Total Current Assets</TableCell>
                         {reversedAnnualReports.map((report) => (
-                          <TableCell key={report.totalCurrentAssets} align="right">{(report.totalCurrentAssets/1000000000).toFixed(2)}</TableCell>
+                          <TableCell key={report.fiscalDateEnding} align="right">{(report.totalCurrentAssets/1000000000).toFixed(2)}</TableCell>
                         ))}
                       </TableRow>
                       <TableRow>
                       <TableCell>Total Assets</TableCell>
                         {reversedAnnualReports.map((report) => (
-                          <TableCell key={report.totalAssets} align="right">{(report.totalAssets/1000000000).toFixed(2)}</TableCell>
+                          <TableCell key={report.fiscalDateEnding} align="right">{(report.totalAssets/1000000000).toFixed(2)}</TableCell>
                         ))}
                       </TableRow>
                       <TableRow>
                       <TableCell>Total Current Liabilities</TableCell>
                         {reversedAnnualReports.map((report) => (
-                          <TableCell key={report.totalCurrentLiabilities} align="right">{(report.totalCurrentLiabilities/1000000000).toFixed(2)}</TableCell>
+                          <TableCell key={report.fiscalDateEnding} align="right">{(report.totalCurrentLiabilities/1000000000).toFixed(2)}</TableCell>
                         ))}
                       </TableRow>
                       <TableRow>
                       <TableCell>Total Liabilities</TableCell>
                         {reversedAnnualReports.map((report) => (
-                          <TableCell key={report.totalLiabilities} align="right">{(report.totalLiabilities/1000000000).toFixed(2)}</TableCell>
+                          <TableCell key={report.fiscalDateEnding} align="right">{(report.totalLiabilities/1000000000).toFixed(2)}</TableCell>
                         ))}
                       </TableRow>
                       <TableRow>
                       <TableCell>Long Term Debt</TableCell>
                         {reversedAnnualReports.map((report) => (
-                          <TableCell key={report.longTermDebt} align="right">{(report.longTermDebt/1000000000).toFixed(2)}</TableCell>
+                          <TableCell key={report.fiscalDateEnding} align="right">{(report.longTermDebt/1000000000).toFixed(2)}</TableCell>
                         ))}
                       </TableRow>
                       <TableRow>
                       <TableCell>Total Equity</TableCell>
                         {reversedAnnualReports.map((report) => (
-                          <TableCell key={report.totalShareholderEquity} align="right">{(report.totalShareholderEquity/1000000000).toFixed(2)}</TableCell>
+                          <TableCell key={report.fiscalDateEnding} align="right">{(report.totalShareholderEquity/1000000000).toFixed(2)}</TableCell>
                         ))}
                       </TableRow>
                     </TableBody>

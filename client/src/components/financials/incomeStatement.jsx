@@ -65,7 +65,7 @@ const IncomeStatement = ({incomeStatementData}) => {
                     <TableRow>
                     <TableCell>Net Income</TableCell>
                       {reversedAnnualReports.map((report) => (
-                        <TableCell key={report.netIncome} align="right">{(report.netIncome/1000000000).toFixed(2)}</TableCell>
+                        <TableCell key={report.fiscalDateEnding} align="right">{(report.netIncome/1000000000).toFixed(2)}</TableCell>
                       ))}
                     </TableRow>
                   </TableBody>
