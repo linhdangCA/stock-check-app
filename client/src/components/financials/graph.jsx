@@ -51,7 +51,7 @@ const Graph = (props) => {
         <Table className={classes.table} size="small" aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell width="100%">Graph</TableCell>
+              <TableCell width="100%">Technical Charts</TableCell>
               <TableCell>
                 <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                   {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}

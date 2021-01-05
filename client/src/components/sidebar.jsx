@@ -13,8 +13,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
+    position: '-webkit-sticky',
     position: 'sticky',
     overflow: 'auto',
+    top: 55,
     maxHeight: 720,
     fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(','),
   },
@@ -30,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   '@global': {
-    // You should target [class*="MuiButton-root"] instead if you nest themes.
     '.MuiListItem-root': {
       justifyContent: 'flex-start',
     },
@@ -63,7 +64,6 @@ const Sidebar = (props) => {
         ))}
       </List>
     </Hidden>
-
   )
 }
 
