@@ -106,12 +106,13 @@ class App extends React.Component {
         if (ticker === this.state.companies[i].overview.Symbol) {
           var updatedCompanies = Object.assign(this.state.companies);
           updatedCompanies.splice(i, 1);
-          if (this.state.companies.length === 1) {
+          var updatedDisplay = this.state.display - 1;
+          if (updatedCompanies.length === 1) {
             this.setState({companies: updatedCompanies, display: '0'});
-          } else if (this.state.companies[i] !== this.state.companies.length - 1) {
-            this.setState({companies: updatedCompanies});
+          } else if (this.state.display === updatedCompanies.length || this.state.display > i) {
+            this.setState({companies: updatedCompanies, display: updatedDisplay});
           } else {
-            this.setState({companies: updatedCompanies, display: i - 1});
+            this.setState({companies: updatedCompanies});
           }
         }
       }
