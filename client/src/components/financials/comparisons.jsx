@@ -18,13 +18,13 @@ import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    minWidth: 650,
+    minWidth: 1200,
   },
   '@global': {
-    // You should target [class*="MuiButton-root"] instead if you nest themes.
     '.MuiTableHead-root': {
       justifyContent: 'center',
       backgroundColor: 'lightgrey',
+      border: '3px solid grey',
     },
   },
   thead: {
@@ -64,7 +64,6 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
   function populateRow(company) {
     const lastRefresh = companies[company].timeSeriesMonthly.['Meta Data'].['3. Last Refreshed'];
     const stockClose = Number(companies[company].timeSeriesMonthly.['Monthly Adjusted Time Series'].[lastRefresh].['4. close']).toFixed(2);
-    console.log('lastRefresh', lastRefresh, 'stockClose', stockClose)
     if (companies[company].cashFlowStatement.annualReports.length === 0 || companies[company].balanceSheet.annualReports.length === 0 || companies[company].incomeStatement.annualReports.length === 0) {
       rows.push(createData(companies[company].overview.Symbol, 'n/a', stockClose, 'n/a', 'n/a', 'n/a', 'n/a', 'n/a'))
     } else {
@@ -146,9 +145,9 @@ const ComparisonAnalysis = ({companies, getTickerFinancials, removeCompany, chan
                               : ''
                             }
                           </TableCell>
-                          <TableCell align="center">{row.dcf}</TableCell>
-                          <TableCell align="center">{row.sp}</TableCell>
-                          <TableCell align="center">{row.mktcap}</TableCell>
+                          <TableCell align="center">${row.dcf}</TableCell>
+                          <TableCell align="center">${row.sp}</TableCell>
+                          <TableCell align="center">${row.mktcap}</TableCell>
                           <TableCell align="center">{row.ca}</TableCell>
                           <TableCell align="center">{row.d_ta}</TableCell>
                           <TableCell align="center">{row.d_e}</TableCell>

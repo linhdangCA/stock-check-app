@@ -42,36 +42,46 @@ const Overview = (props) => {
                   <Table size="small">
                     <TableBody>
                       <TableRow>
-                        <TableCell width="300">Company Name</TableCell>
-                        <TableCell>{props.overviewData.Name}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell width="300">Company Ticker</TableCell>
-                        <TableCell>{props.overviewData.Symbol}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell width="300">Annual Dividend Per Share:</TableCell>
-                        <TableCell>{props.overviewData.DividendPerShare}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell width="300">Quarterly Dividend Per Share:</TableCell>
-                        <TableCell>{isNaN(props.overviewData.DividendPerShare) ? 'None' : props.overviewData.DividendPerShare / 4}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell width="300">Earnings Per Share:</TableCell>
-                        <TableCell>{props.overviewData.EPS}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell width="300">Shares Outstanding:</TableCell>
-                        <TableCell>{(props.overviewData.SharesOutstanding / 1000000000).toFixed(2)}B</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell width="300">Shares Float:</TableCell>
-                        <TableCell>{(props.overviewData.SharesFloat / 1000000000).toFixed(2)}B</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell width="300">Shares Short:</TableCell>
-                        <TableCell>{(props.overviewData.SharesShort / 1000000000).toFixed(2)}B</TableCell>
+                        <TableCell>
+                          <Table>
+                            <TableBody>
+
+                              <TableRow>
+                                <TableCell width="300">Company Name</TableCell>
+                                <TableCell width="200">{props.overviewData.Name}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell width="300">Company Ticker</TableCell>
+                                <TableCell>{props.overviewData.Symbol}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell width="300">Annual Dividend Per Share:</TableCell>
+                                <TableCell>${props.overviewData.DividendPerShare}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell width="300">Quarterly Dividend Per Share:</TableCell>
+                                <TableCell>{isNaN(props.overviewData.DividendPerShare) ? 'None' : `$${props.overviewData.DividendPerShare / 4}`}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell width="300">Earnings Per Share:</TableCell>
+                                <TableCell>${props.overviewData.EPS}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell width="300">Shares Outstanding:</TableCell>
+                                <TableCell>{(props.overviewData.SharesOutstanding / 1000000000).toFixed(2)}B</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell width="300">Shares Float:</TableCell>
+                                <TableCell>{(props.overviewData.SharesFloat / 1000000000).toFixed(2)}B</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell width="300">Shares Short:</TableCell>
+                                <TableCell>{(props.overviewData.SharesShort / 1000000000).toFixed(2)}B</TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </TableCell>
+                        <TableCell width="50%">{props.overviewData.Description}</TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>

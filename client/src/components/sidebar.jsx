@@ -41,7 +41,7 @@ const Sidebar = (props) => {
   const classes = useStyles();
   return (
     <Hidden mdDown>
-      <List className={classes.root} subheader={<li />} dense align="flex-start">
+      <List className={classes.root} subheader={<li />} dense align="center">
         {['01-10', '11-20', '21-30', '31-40', '41-50', '51-60', '61-70', '71-80', '81-90', '91-100'].map((sectionId) => (
           <li key={`section-${sectionId}`} className={classes.listSection}>
             <ul className={classes.ul}>
