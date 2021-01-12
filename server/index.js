@@ -1,7 +1,7 @@
 const express = require('express')
 const parser = require('body-parser')
 const axios = require('axios')
-const key = require('../alphaVintage/alphaVintage.js')
+const key = require('../api/alphaVintage.js')
 const cheerio = require('cheerio')
 
 const app = express();

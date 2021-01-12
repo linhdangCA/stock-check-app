@@ -1,7 +1,8 @@
+## node modules
 node_modules
-alphaVintage
 
 ## distribution
 dist/
 
 ## alpha vintage api key
+alphaVintage.js
