@@ -21,3 +21,5 @@ Run script 'npm run react-dev' to start Webpack
 
 ## API
 This application requires an API key from Alpha Vantage (https://www.alphavantage.co/support/#api-key) to populate finanical data
+
+test
